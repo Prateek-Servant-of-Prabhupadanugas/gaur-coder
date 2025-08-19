@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Soul Coder</title>
+    <style>
+        /* styles.css */
+        body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background: radial-gradient(circle, #2a003b, #000);
+        color: #ffffff;
+        overflow-x: hidden;
+        }
+
+        .about-section {
+        padding: 50px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+        background: rgba(50, 0, 100, 0.7);
+        box-shadow: 0 0 20px #8000ff, 0 0 50px #8000ff;
+        border-radius: 15px;
+        }
+
+        .content-container {
+        padding: 20px;
+
+        }
+
+        .heading {
+        font-size: 3rem;
+        color: #d9b3ff;
+        text-shadow: 0 0 10px #8000ff, 0 0 30px #c77dff;
+        }
+
+        .subheading {
+        font-size: 1.8rem;
+        margin-top: 20px;
+        color: #ffccff;
+        }
+
+        .intro {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        }
+
+        .highlight {
+        color: #e600ff;
+        text-shadow: 0 0 10px #e600ff, 0 0 20px #ff66ff;
+        font-weight: bold;
+        }
+
+        .offerings {
+        display : flex ; 
+        flex-direction: column;
+        
+        list-style-type: none;
+        padding: 0;
+        margin: 20px 0;
+        }
+
+        .offerings li {
+        display : flex ; 
+        align-items: center;
+        justify-content : center ; 
+        font-size: 1.2rem;
+        margin: 10px 0;
+        background: rgba(128, 0, 255, 0.2);
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #ff99ff, 0 0 20px #ff33cc;
+        }
+
+        .cta {
+        color: #ff66ff;
+        font-weight: bold;
+        text-shadow: 0 0 15px #ff66ff, 0 0 30px #ff99ff;
+        font-size: 1.4rem;
+        }
+
+    </style>
+</head>
+<body>
+  <div class="about-section">
+    <div class="content-container">
+        <h1 class="heading">About Soul Coder</h1>
+        <div style="display:flex ; justify-content: center; align-items: center;">
+            <div>
+                <p class="intro">Welcome to <span class="highlight">Soul Coder</span>, <br>Do you Know what Understanding a Code Means ? <br><br>Understanding a line of code with respect to <br> <span class="heading" style="font-size : larger ; "><b>Intention</b>, <b>Conception</b>, and <b>Action</b></span>. <br>We are not Here to explain a concept superficially , <br>We are here to help you understand the concepts Superficially . <br> Our Goal is to Clear your Intentions , Conceptions , and Actions . <br>And Most Importantly <span class="heading " style="font-size:larger;">Definitions</span> to understand - <br><span class="heading" style="font-size: larger;">Why We Code, what We Code ?</span></p>
+            </div>
+            <div>
+                <img src="../assets/images/logo.png" alt="Join SoulCoder">
+            </div>
+        </div>
+      
+      <h2 class="subheading">Who We Are</h2>
+      <p>At <span class="highlight">Soul Coder</span>, we provide affordable, high-quality coding education to Students. Our mission is to make coding accessible to everyone while preparing students for a tech-driven future.</p>
+      
+      <h2 class="subheading">What We Offer</h2>
+      <ul class="offerings">
+        <li>Real World Projects</li>
+        <li>Business Use Cases</li>
+        <li>Complete Machine Learning Course</li>
+        <li>Artificial Intelligence and Prompt Engineering</li>
+        <li>Gamifying Projects</li>
+        <li>Importance of Backend Projects</li>
+        <li>Building a Resume</li>
+      </ul>
+      
+      <h2 class="subheading">Why Choose Soul Coder?</h2>
+      <p>With a futuristic theme, affordable pricing, and hands-on learning, <span class="highlight">Soul Coder</span> ensures students gain the skills needed for their careers and personal growth.</p>
+      
+      <h2 class="subheading">Join the Soul Coder Community</h2>
+      <p>Step into the world of coding with <span class="highlight">Soul Coder</span> and unlock your potential. <span class="cta">Let’s code your future together!</span></p>
+    </div>
+  </div>
+
+
+  <script>
+    // script.js
+    document.addEventListener("DOMContentLoaded", () => {
+    const headings = document.querySelectorAll('.subheading, .heading');
+    headings.forEach(heading => {
+        heading.addEventListener('mouseenter', () => {
+        heading.style.textShadow = "0 0 20px #ff33cc, 0 0 40px #ff66ff";
+        });
+        heading.addEventListener('mouseleave', () => {
+        heading.style.textShadow = "0 0 10px #8000ff, 0 0 30px #c77dff";
+        });
+    });
+    });
+
+  </script>
+</body>
+</html>

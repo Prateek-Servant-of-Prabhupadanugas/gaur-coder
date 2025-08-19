@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Icosahedron</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            perspective: 800px;
+            overflow: hidden;
+        }
+
+        .scene {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg);
+        }
+
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 87px solid rgba(128, 0, 128, 0.5); /* Semi-transparent purplish color */
+        }
+
+        /* Positioning each triangle in 3D space */
+        .triangle:nth-child(1)  { transform: rotateY(0deg)   rotateX(0deg)  translateZ(100px); }
+        .triangle:nth-child(2)  { transform: rotateY(72deg)  rotateX(0deg)  translateZ(100px); }
+        .triangle:nth-child(3)  { transform: rotateY(144deg) rotateX(0deg)  translateZ(100px); }
+        .triangle:nth-child(4)  { transform: rotateY(216deg) rotateX(0deg)  translateZ(100px); }
+        .triangle:nth-child(5)  { transform: rotateY(288deg) rotateX(0deg)  translateZ(100px); }
+        .triangle:nth-child(6)  { transform: rotateY(36deg)  rotateX(63deg) translateZ(100px); }
+        .triangle:nth-child(7)  { transform: rotateY(108deg) rotateX(63deg) translateZ(100px); }
+        .triangle:nth-child(8)  { transform: rotateY(180deg) rotateX(63deg) translateZ(100px); }
+        .triangle:nth-child(9)  { transform: rotateY(252deg) rotateX(63deg) translateZ(100px); }
+        .triangle:nth-child(10) { transform: rotateY(324deg) rotateX(63deg) translateZ(100px); }
+        .triangle:nth-child(11) { transform: rotateY(0deg)   rotateX(-63deg) translateZ(100px); }
+        .triangle:nth-child(12) { transform: rotateY(72deg)  rotateX(-63deg) translateZ(100px); }
+        .triangle:nth-child(13) { transform: rotateY(144deg) rotateX(-63deg) translateZ(100px); }
+        .triangle:nth-child(14) { transform: rotateY(216deg) rotateX(-63deg) translateZ(100px); }
+        .triangle:nth-child(15) { transform: rotateY(288deg) rotateX(-63deg) translateZ(100px); }
+        .triangle:nth-child(16) { transform: rotateY(36deg)  rotateX(180deg) translateZ(100px); }
+        .triangle:nth-child(17) { transform: rotateY(108deg) rotateX(180deg) translateZ(100px); }
+        .triangle:nth-child(18) { transform: rotateY(180deg) rotateX(180deg) translateZ(100px); }
+        .triangle:nth-child(19) { transform: rotateY(252deg) rotateX(180deg) translateZ(100px); }
+        .triangle:nth-child(20) { transform: rotateY(324deg) rotateX(180deg) translateZ(100px); }
+
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+    </div>
+
+    
+
+    <script>
+        const scene = document.querySelector('.scene');
+        let isMouseDown = false;
+        let startX, startY, currentX = 0, currentY = 0;
+
+        // Mouse down event
+        window.addEventListener('mousedown', (e) => {
+            isMouseDown = true;
+            startX = - e.clientX + currentX;
+            startY = - e.clientY + currentY;
+        });
+
+        // Mouse move event
+        window.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            currentX = startX - e.clientX ;
+            currentY = startY - e.clientY;
+            scene.style.transform = `rotateX(${currentY}deg) rotateY(${currentX}deg)`;
+        });
+
+        // Mouse up event
+        window.addEventListener('mouseup', () => {
+            isMouseDown = false;
+        });
+
+        // Touch events for mobile devices
+        let isTouching = false;
+        let touchStartX, touchStartY;
+
+        window.addEventListener('touchstart', (e) => {
+            isTouching = true;
+            touchStartX = - e.touches[0].clientX + currentX;
+            touchStartY = - e.touches[0].clientY + currentY;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isTouching) return;
+            currentX = - e.touches[0].clientX + touchStartX;
+            currentY = - e.touches[0].clientY + touchStartY;
+            scene.style.transform = `rotateX(${currentY}deg) rotateY(${currentX}deg)`;
+        });
+
+        window.addEventListener('touchend', () => {
+            isTouching = false;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: Introduction to AI and Prompt Engineering</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chessboard {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            
+            z-index: -1;
+        }
+
+        .chessboard div {
+            width: 100px;
+            height: 10;
+
+            
+            background: linear-gradient(45deg, rgba(198, 138, 255, 0.8), #fad0c4);
+            animation: gradient-animation 2s infinite;
+        }
+
+        .chessboard div:nth-child(even) {
+            background-color: rgba(138, 43, 226, 0.8);
+        }
+
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+            }
+
+        @keyframes changeColor {
+            0% { background-color: rgba(75, 0, 130, 0.8); }
+            50% { background-color: rgba(198, 138, 255, 0.8); }
+            100% { background-color: rgba(23, 22, 24, 0.8); }
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+        }
+
+        .content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .content h2 {
+            color: #FFD700;
+        }
+
+        .content ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="chessboard">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+
+    <header>
+        <h1>Day 1: Introduction to AI and Prompt Engineering</h1>
+    </header>
+
+    <div class="content">
+        <h2>Topics Covered:</h2>
+        <ul>
+            <li><strong>Basics of Artificial Intelligence (AI):</strong>
+                <ul>
+                    <li>What is AI?</li>
+                    <li>How AI is transforming industries.</li>
+                    <li>Types of AI (Narrow AI, General AI, Superintelligent AI).</li>
+                </ul>
+            </li>
+            <li><strong>Introduction to Prompt Engineering:</strong>
+                <ul>
+                    <li>What is a prompt?</li>
+                    <li>The role of prompts in AI models like ChatGPT.</li>
+                    <li>Anatomy of a good prompt (clarity, specificity, context).</li>
+                </ul>
+            </li>
+            <li><strong>Tools Overview:</strong>
+                <ul>
+                    <li>OpenAI ChatGPT, DALL-E, Bard, Bing AI.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Hands-On Exercises:</h2>
+        <ul>
+            <li>Create a basic prompt and observe AI responses.</li>
+            <li>Practice iterative prompting (refining responses).</li>
+        </ul>
+
+        <h2>Real-World Application:</h2>
+        <ul>
+            <li>Using AI for brainstorming and generating ideas efficiently.</li>
+        </ul>
+        <img src="https://via.placeholder.com/800x400" alt="AI Concepts">
+    </div>
+
+    <footer>
+        &copy; 2024 Soul Coder | All Rights Reserved
+    </footer>
+</body>
+</html>
+

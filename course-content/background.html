@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Cube Parallax</title>  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+        height : 100% ; 
+        overflow : hidden ;
+    }
+    body {
+      height: 100%;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, rgba(70, 0, 131, 0.7), rgba(238, 130, 238, 0.6)); /* Slightly toned down background */
+      overflow: auto ;
+      transition: background 0.3s ease, text-shadow 0.3s ease; /* Smooth transition when switching themes */
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px;
+      z-index: -1;  /* Background layer */
+      transition: none;
+    }
+
+    .cube {
+      width: 100px;
+      height: 100px;
+      background-color: rgba(255, 255, 255, 0.3);
+      transform-style: preserve-3d;
+      animation: moveCube 5s infinite alternate;
+      animation-timing-function: ease-in-out;
+      z-index: -2;  /* Set z-index behind the background */
+    }
+
+    /* Colors for cubes */
+    .cube:nth-child(5n+1) { background-color: rgba(255, 0, 255, 0.2); }
+    .cube:nth-child(5n+2) { background-color: rgba(187, 3, 211, 0.2); }
+    .cube:nth-child(5n+3) { background-color: rgba(117, 3, 151, 0.2); }
+    .cube:nth-child(5n+4) { background-color: rgba(91, 3, 117, 0.2); }
+    .cube:nth-child(5n+5) { background-color: rgba(56, 1, 73, 0.2); }
+
+    /* Keyframes for animation */
+    @keyframes moveCube {
+      0% {
+        transform: translateZ(-100px) rotateY(0deg);
+      }
+      50% {
+        transform: translateZ(200px) rotateY(360deg);
+      }
+      100% {
+        transform: translateZ(-100px) rotateY(720deg);
+      }
+    }
+
+    .main-background {
+      position : absolute ;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      z-index : -1;  /* Send the background to the back */
+    }
+    
+    header {
+        text-align: center;
+        padding: 20px;
+        background: rgba(183, 0, 255, 0.8);
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        color: #FFFFFF;
+        z-index: 1;
+        position: relative;
+    }
+
+    header h1 {
+        font-size: 2.5em;
+    }
+
+    .content {
+        max-width: 800px;
+        justify-self: center;
+        margin: 20px;
+        padding: 20px;
+        background: rgba(204, 0, 255, 0.7); /* Slightly less vibrant */
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        overflow : auto ;
+        color: #FFF;
+        z-index: 1;
+    }
+
+    .content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .content h2 {
+        text-align: center;
+        padding: 20px;
+        background: rgba(183, 0, 255, 0.8);
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        color: #FFFFFF;
+        z-index: 1;
+    }
+
+    .content ul {
+        list-style-type: disc;
+        margin-left: 20px;
+        color: #fff;
+    }
+
+    footer {
+        text-align: center;
+        padding: 10px;
+        background: rgba(204, 0, 255, 0.8);
+        width: 100%;
+        position: relative;
+        color: #FFF;
+        z-index: 1;
+    }
+
+    div {
+        color : rgba(0,0,0,1); 
+        font-weight : bold ; 
+    }
+
+    ul li {
+        margin-bottom : 10px ; 
+        margin-top : 10px ; 
+        
+    }
+
+    /* Simple blog styles */
+    .simple-blog {
+        background: #f4f4f4;
+        color: #000000;
+        transition: #f4f4f4 0.3s ease, color 0.3s ease;
+    }
+
+    .simple-blog header {
+        background: #3a3a3a;
+        color: #fff;
+        box-shadow: none;
+    }
+
+    .simple-blog .content {
+        background: #fff;
+        color: #000000;
+        box-shadow: none;
+    }
+
+    .simple-blog .content .ul .li {
+        color : rgb(255, 255, 255) ; 
+        text-shadow : rgba(0,0,0,1);
+        
+    }
+
+    .simple-blog footer {
+        background: #3a3a3a;
+        color: #fff;
+    }
+
+    /* Toggle Button Styles */
+    .toggle-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 25px;
+        background-color: #ccc;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2px;
+    }
+
+    .toggle-btn .toggle-circle {
+        width: 20px;
+        height: 20px;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+
+    /* Toggle On State */
+    .toggle-btn.active {
+        background-color: purple;
+    }
+
+    .toggle-btn.active .toggle-circle {
+        transform: translateX(25px);
+    }
+
+    /* Make all cubes transparent when active */
+    .background.transparent-cubes .cube {
+        background-color: rgba(255, 255, 255, 0); /* Transparent cubes */
+    }
+
+    /* Disable Animation on Background */
+    .background.no-animation {
+        animation: none;
+    }
+  </style>
+</head>
+<body>
+    <div class="main-background">
+        <div class="background" id="background"></div>
+    </div>
+    
+    <header>
+        <h1>Day 1: Introduction to AI and Prompt Engineering</h1>
+        <div class="toggle-btn" id="toggleBtn">
+            <div class="toggle-circle"></div>
+        </div>
+    </header>
+
+    <div class="content" id="content-div">
+        <h2>Topics Covered:</h2>
+        <br>
+        <ul style="list-style-type: none ;">
+            <li><strong>Basics of Artificial Intelligence (AI):</strong>
+                <ul>
+                    <li>What is AI?</li>
+                    <li>How AI is transforming industries.</li>
+                    <li>Types of AI (Narrow AI, General AI, Superintelligent AI).</li>
+                </ul>
+            </li>
+            <li><strong>Introduction to Prompt Engineering:</strong>
+                <ul>
+                    <li>What is a prompt?</li>
+                    <li>The role of prompts in AI models like ChatGPT.</li>
+                    <li>Anatomy of a good prompt (clarity, specificity, context).</li>
+                </ul>
+            </li>
+            <li><strong>Tools Overview:</strong>
+                <ul>
+                    <li>OpenAI ChatGPT, DALL-E, Bard, Bing AI.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Hands-On Exercises:</h2>
+        <ul>
+            <li>Create a basic prompt and observe AI responses.</li>
+            <li>Practice iterative prompting (refining responses).</li>
+        </ul>
+
+        <h2>Real-World Application:</h2>
+        <ul>
+            <li>Using AI for brainstorming and generating ideas efficiently.</li>
+        </ul>
+        <img src="https://via.placeholder.com/800x400" alt="AI Concepts">
+    </div>
+
+    <footer>
+        &copy; 2024 Soul Coder | All Rights Reserved
+    </footer>
+
+    <script>
+        // JavaScript to dynamically create cubes
+        const numberOfCubes = 65;  // Customize the number of cubes
+        const background = document.getElementById('background');
+
+        // Function to create a single cube
+        function createCube() {
+            const cube = document.createElement('div');
+            cube.classList.add('cube');
+            background.appendChild(cube);
+        }
+
+        // Create all cubes
+        for (let i = 0; i < numberOfCubes; i++) {
+            createCube();
+        }
+
+        // Toggle simple blog style and transparency for cubes
+        const toggleBtn = document.getElementById('toggleBtn');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', function() {
+            body.classList.toggle('simple-blog');
+            toggleBtn.classList.toggle('active');
+            background.classList.toggle('transparent-cubes');  // Toggle transparency for cubes
+        });
+    </script>
+</body>
+</html>

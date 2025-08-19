@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Node Interconnectivity</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #0d0d0d; /* Dark background */
+            position: relative;
+        }
+
+        .node {
+            width: 15px;
+            height: 15px;
+            background-color: #ff5722; /* Bright color */
+            border-radius: 50%;
+            position: absolute;
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 87, 34, 0.8);
+        }
+
+        .line {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.6);
+            height: 2px;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const numNodes = 10; // Number of nodes
+        const nodes = [];
+        const lines = [];
+
+        // Create nodes
+        for (let i = 0; i < numNodes; i++) {
+            const node = document.createElement('div');
+            node.className = 'node';
+            node.style.top = Math.random() * window.innerHeight + 'px';
+            node.style.left = Math.random() * window.innerWidth + 'px';
+            document.body.appendChild(node);
+            nodes.push(node);
+        }
+
+        // Draw lines between nodes
+        function drawLines() {
+            lines.forEach(line => line.remove());
+            lines.length = 0; // Clear existing lines
+
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const x1 = parseFloat(nodes[i].style.left) + 7.5; // Center x
+                    const y1 = parseFloat(nodes[i].style.top) + 7.5; // Center y
+                    const x2 = parseFloat(nodes[j].style.left) + 7.5; // Center x
+                    const y2 = parseFloat(nodes[j].style.top) + 7.5; // Center y
+
+                    const line = document.createElement('div');
+                    line.className = 'line';
+                    document.body.appendChild(line);
+                    const length = Math.hypot(x2 - x1, y2 - y1);
+                    line.style.width = `${length}px`;
+                    line.style.transform = `translate(${(x1 + x2) / 2}px, ${(y1 + y2) / 2}px) rotate(${Math.atan2(y2 - y1, x2 - x1)}rad)`;
+                    lines.push(line);
+                }
+            }
+        }
+
+        // Update lines on window resize
+        window.addEventListener('resize', drawLines);
+
+        // Handle node interaction
+        nodes.forEach(node => {
+            node.addEventListener('mouseover', () => {
+                node.style.transform = 'scale(1.5)';
+            });
+
+            node.addEventListener('mouseout', () => {
+                node.style.transform = 'scale(1)';
+            });
+        });
+
+        // Initial drawing of lines
+        drawLines();
+    </script>
+</body>
+</html>

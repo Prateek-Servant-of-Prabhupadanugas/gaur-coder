@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoulCoder - Krishna's Code</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="/assets/images/just_soul.png" sizes="32x32">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1f1f1f; /* Dark background */
+            color: white;
+            overflow-x: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        .visible {
+            background-color: #2b003a;
+        }
+
+        .transparent {
+            background-color: rgba(43, 0, 58, 0.3);
+        }
+
+        /* Navbar Brand */
+        .brand img {
+            object-fit: contain;
+            width: 60px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            padding: 10px 20px;
+            transition: 0.3s ease-in-out;
+        }
+
+        nav ul li a:hover {
+            background-color: #6600ff;
+            color: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #6600ff, 0 0 30px #ff00ff, 0 0 40px #6600ff;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 30px;
+            height: 4px;
+            background-color: white;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background-color: #2b003a;
+                text-align: center;
+                transition: all 0.5s ease;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li {
+                margin: 30px 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .project-section {
+            width: 100%;
+            padding: 50px 10%;
+            background-color: #6600ff;
+        }
+
+        .sectionize {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            background-color: #2b003a;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .video-container {
+            flex: 1;
+            max-width: 45%;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 315px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .details-container {
+            flex: 1;
+            max-width: 45%;
+            text-align: left;
+        }
+
+        .details-container h3 {
+            color: #ffccff;
+            margin-bottom: 15px;
+        }
+
+        .details-container p {
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <nav id="navbar" class="visible">
+            <div class="brand"><img src="../assets/images/logo.png" alt="Soul Coder Logo"></div>
+            <ul>
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#services">Services</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </nav>
+        <div class="project-section">
+            <div class="sectionize">
+                <div class="video-container">
+                    <!-- Embed YouTube Video -->
+                    <iframe
+                        src="https://youtu.be/uuYTPZuVUlI?si=T-C0a7tAgtAsAsTA" 
+                        id="video"
+                        title="YouTube video player" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="details-container">
+                    <!-- Video Details -->
+                    <h3>Project Title: Glowing Universe</h3>
+                    <p>
+                        This project demonstrates the use of vibrant photoluminescent effects in web design. 
+                        Watch the video to learn about the design inspirations and implementation techniques.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="project-section">
+            <div class="sectionize">
+                <div class="details-container" style="text-align: right;">
+                    <!-- Video Details -->
+                    <h3>Project Title: Glowing Universe</h3>
+                    <p>
+                        This project demonstrates the use of vibrant photoluminescent effects in web design. 
+                        Watch the video to learn about the design inspirations and implementation techniques.
+                    </p>
+                </div>
+                <div class="video-container">
+                    <!-- Embed YouTube Video -->
+                    <iframe
+                        src="https://youtu.be/uuYTPZuVUlI?si=T-C0a7tAgtAsAsTA" 
+                        id="video"
+                        title="YouTube video player" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                
+            </div>
+        </div>
+        <div class="project-section">
+            <div class="sectionize">
+                <div class="video-container">
+                    <!-- Embed YouTube Video -->
+                    <iframe
+                        src="https://youtu.be/uuYTPZuVUlI?si=T-C0a7tAgtAsAsTA" 
+                        id="video"
+                        title="YouTube video player" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="details-container">
+                    <!-- Video Details -->
+                    <h3>Project Title: Glowing Universe</h3>
+                    <p>
+                        This project demonstrates the use of vibrant photoluminescent effects in web design. 
+                        Watch the video to learn about the design inspirations and implementation techniques.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="project-section">
+            <div class="sectionize">
+                <div class="details-container" style="text-align: right;">
+                    <!-- Video Details -->
+                    <h3>Project Title: Glowing Universe</h3>
+                    <p>
+                        This project demonstrates the use of vibrant photoluminescent effects in web design. 
+                        Watch the video to learn about the design inspirations and implementation techniques.
+                    </p>
+                </div>
+                <div class="video-container">
+                    <!-- Embed YouTube Video -->
+                    <iframe
+                        src="https://youtu.be/uuYTPZuVUlI?si=T-C0a7tAgtAsAsTA" 
+                        id="video"
+                        title="YouTube video player" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                
+            </div>
+        </div>
+        <div class="project-section">
+            <div class="sectionize">
+                <div class="video-container">
+                    <!-- Embed YouTube Video -->
+                    <iframe
+                        src="https://youtu.be/uuYTPZuVUlI?si=T-C0a7tAgtAsAsTA" 
+                        id="video"
+                        title="YouTube video player" 
+                        allow="autoplay; encrypted-media" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="details-container">
+                    <!-- Video Details -->
+                    <h3>Project Title: Glowing Universe</h3>
+                    <p>
+                        This project demonstrates the use of vibrant photoluminescent effects in web design. 
+                        Watch the video to learn about the design inspirations and implementation techniques.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Function to toggle video play/pause
+        function toggleVideoPlayback(entries, observer) {
+            entries.forEach(entry => {
+                const iframe = entry.target;
+                const iframeSrc = iframe.src;
+
+                if (entry.isIntersecting) {
+                    // Play video by adding autoplay to iframe
+                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                } else {
+                    // Pause video
+                    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                }
+            });
+        }
+
+        // Create an Intersection Observer
+        const observer = new IntersectionObserver(toggleVideoPlayback, { threshold: 0.5 });
+
+        // Target the iframe
+        const videoIframe = document.getElementById('video');
+        observer.observe(videoIframe);
+    </script>
+</body>
+</html>
+
