@@ -725,15 +725,34 @@ border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* Logo Section */
+.logo{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .logo-section .logo img {
     width : 100px ; 
     height : auto ; 
 }
 
+.logo-section{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+}
+
 .logo-section i {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     font-size: 16px;
     color: #ffffff;
     text-shadow: 0 0 5px #f0f, 0 0 10px #f0f, 0 0 20px #f0f;
+    padding:10px;
 }
 
 /* Social Media Icons */
