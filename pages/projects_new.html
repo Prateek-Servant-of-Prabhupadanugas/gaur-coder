@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GaurCoder • Python & AI Course</title>
+  <meta name="description" content="GaurCoder - 6 month end-to-end Python & AI curriculum. Mini projects + 3 AI capstones (AI Art, AI Tutor, AI Fighting Game)." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --purple:#6C2BD9; /* primary */
+      --blue:#0B1B3F;
+      --gold:#F2C14E;
+      --bg:#07081a;
+      --muted:#b9c1d6;
+      --card:rgba(255,255,255,.04);
+      --glass:rgba(255,255,255,.03);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:linear-gradient(180deg, #041028 0%, var(--blue) 60%); color:#eef2ff}
+    a{color:inherit}
+    .container{max-width:1100px; margin:28px auto; padding:0 20px}
+
+    /* header */
+    .cta-btn {
+            padding: 8px 14px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, var(--purple), #3b0ddb);
+            color: var(--white);
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(108, 43, 217, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(108, 43, 217, 0.3);
+        }
+
+        /* NAV */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(8px);
+            background: linear-gradient(180deg, rgba(11, 27, 63, 0.85), rgba(11, 27, 63, 0.55));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: conic-gradient(from 200deg, var(--gold), var(--purple), #3b0ddb);
+            box-shadow: 0 8px 30px rgba(108, 43, 217, 0.2);
+        }
+
+        .brand {
+            font-weight: 800;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: all 0.18s;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 60;
+        }
+
+        .hamburger .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 10px;
+            transition: all 0.3s linear;
+        }
+
+        .hamburger.open .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.open .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Mobile navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(11, 27, 63, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 55;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-nav.open {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--white);
+            transition: color 0.2s;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--gold);
+        }
+
+    /* hero */
+    .hero{display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:center; margin-top:18px}
+    .hero h2{font-size:34px;margin:0 0 10px}
+    .hero p{color:var(--muted);margin:0 0 16px}
+    .cta{display:flex; gap:10px}
+    .btn{padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--purple),#3b0ddb);box-shadow:0 8px 30px rgba(108,43,217,.25)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.06)}
+
+    /* 3D panel (CSS transform) */
+    .panel-3d{position:relative;height:320px; perspective:1200px}
+    .card-3d{width:360px;height:260px; margin-left:auto; transform-style:preserve-3d; transition:transform .2s ease; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid rgba(255,255,255,.06); box-shadow:0 30px 60px rgba(0,0,0,.6)}
+    .card-face{position:absolute; inset:12px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700}
+    .ribbon{position:absolute; left:-10px; top:18px; transform:rotate(-10deg); background:var(--gold); color:#07102a; padding:6px 12px; border-radius:8px; font-weight:800}
+
+    /* sections */
+    section{margin-top:40px}
+    h3{margin:0 0 14px}
+    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:18px}
+    .mini{grid-column:span 4; background:var(--card); border:1px solid rgba(255,255,255,.04); padding:16px; border-radius:14px}
+    .mini h4{margin:6px 0 8px}
+    .mini p{color:var(--muted); margin:0}
+
+    .majors{grid-column:span 12; display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .major{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid rgba(255,255,255,.06); padding:18px; border-radius:14px}
+    .major h4{margin:6px 0}
+    .features{margin:10px 0 0; color:var(--muted)}
+
+    /* footer */
+    footer{margin:60px 0 40px; text-align:center; color:var(--muted)}
+
+    /* responsiveness */
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .panel-3d{height:220px}
+      .mini{grid-column:span 12}
+      .majors{grid-template-columns:1fr}
+      nav{display:none}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="container nav-inner">
+            <div class="logo">
+                <div class="logo-mark" aria-hidden></div>
+                <div class="brand">GaurCoder</div>
+            </div>
+            <div class="nav-links" role="menubar">
+                <a href="./index_new.html" role="menuitem">Home</a>
+                <a href="./pages/projects_new.html" role="menuitem">Projects</a>
+                <a href="./pages/services_new.html" role="menuitem">Services</a>
+                <a href="./index_new.html#contacts" role="menuitem">Contact</a>
+                <a class="cta-btn" href="#enroll">Enroll</a>
+            </div>
+            <div class="hamburger" id="hamburger-menu" aria-label="Open navigation menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="./index_new.html">Home</a>
+        <a href="./pages/projects_new.html">Projects</a>
+        <a href="./pages/services_new.html">Services</a>
+        <a href="./index_new.html#contacts">Contact</a>
+        <a class="cta-btn" href="#enroll">Enroll</a>
+    </div>
+  <div class="container">
+    
+    <main>
+      <section class="hero">
+        <div>
+          <h2>6-Month End-to-End Python & AI Course</h2>
+          <p>Learn Python, build real AI projects, deploy to web and mobile, and launch monetizable products. Includes live sessions, notes, and recordings.</p>
+          <div class="cta">
+            <button class="btn primary">Enroll Now</button>
+            <button class="btn ghost">Download Syllabus</button>
+          </div>
+        </div>
+        <div class="panel-3d" aria-hidden>
+          <div class="ribbon">6 Months • Live + Recorded</div>
+          <div class="card-3d" id="card3d">
+            <div class="card-face" style="transform:translateZ(40px)">AI • Projects • Deploy</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h3>Projects — Mini (5) & Major (3 AI Capstones)</h3>
+        <p style="color:var(--muted); margin:8px 0 18px">Hands-on portfolio: five mini-projects to practice concepts and three major AI projects to showcase production-ready skills.</p>
+
+        <div class="grid">
+          <!-- Mini projects -->
+          <article class="mini">
+            <h4>1. Text Analyzer</h4>
+            <p>Build a CLI/GUI app to analyze word counts, sentiment, and keyword extraction.</p>
+          </article>
+          <article class="mini">
+            <h4>2. Weather Dashboard</h4>
+            <p>Consume public APIs to show weather, forecast charts, and caching strategies.</p>
+          </article>
+          <article class="mini">
+            <h4>3. Expense Tracker</h4>
+            <p>Create an OOP-based personal finance tracker with CSV/DB persistence and plots.</p>
+          </article>
+          <article class="mini">
+            <h4>4. Quiz Game App</h4>
+            <p>Interactive quiz with scoring, timers, and high-score storage.</p>
+          </article>
+          <article class="mini">
+            <h4>5. Basic Chatbot</h4>
+            <p>Rule-based bot for FAQs, then upgrade to ML-based intent detection.</p>
+
+          </article>
+
+          <!-- Major projects -->
+          <div class="majors">
+            <article class="major">
+              <h4>🎨 AI Artwork Creator (Capstone)</h4>
+              <p class="features">Sketch-to-Art pipeline using diffusion models / ControlNet (concept). Students will build a web UI to upload sketches, generate styled images, and export high-res artwork.</p>
+              <ul style="color:var(--muted); margin-top:8px">
+                <li>Input: hand-drawn sketch or image</li>
+                <li>Model: Stable Diffusion / fine-tuning or prompt engineering</li>
+                <li>Deliverable: Web demo (Gradio/Streamlit) + gallery</li>
+              </ul>
+            </article>
+
+            <article class="major">
+              <h4>📚 AI Tutor Chatbot (Capstone)</h4>
+              <p class="features">A study assistant that answers questions from uploaded notes/PDFs using embeddings + RAG. Includes chat UI, summary, and quiz generation features.</p>
+              <ul style="color:var(--muted); margin-top:8px">
+                <li>Ingest: PDF, DOCX, or typed notes</li>
+                <li>Tech: LangChain/LlamaIndex, vector DB (FAISS/Chromadb)</li>
+                <li>Deliverable: Streamlit/FastAPI demo with chat + downloads</li>
+              </ul>
+            </article>
+
+            <article class="major">
+              <h4>🎮 AI Fighting Game (Capstone)</h4>
+              <p class="features">Tekken-like 2-player fighting game with PvAI. Built in Python (Kivy) for APK export. AI opponent can be rule-based, FSM, or RL-powered for adaptive gameplay.</p>
+              <ul style="color:var(--muted); margin-top:8px">
+                <li>Gameplay: Local 2-player + single-player vs AI</li>
+                <li>AI: Behavior trees / RL (optional advanced)</li>
+                <li>Deliverable: Playable website demo + APK</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="curriculum" style="margin-top:40px">
+        <h3>Course Curriculum (High-level)</h3>
+        <p style="color:var(--muted)">Phased learning: foundations → data & ML → deep learning & NLP → productization. Weekly checkpoints, Saturday doubt sessions, Sunday mini-projects.</p>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px">
+          <div style="background:var(--glass); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.04)"><strong>Phase 1</strong><div style="color:var(--muted)">Python Basics, OOP</div></div>
+          <div style="background:var(--glass); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.04)"><strong>Phase 2</strong><div style="color:var(--muted)">Data Analysis, ML Intro</div></div>
+          <div style="background:var(--glass); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.04)"><strong>Phase 3</strong><div style="color:var(--muted)">DL, NLP, CV</div></div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div style="margin-top:36px">GaurCoder • <a href="http://www.gaurcoder.com">www.gaurcoder.com</a> • Live sessions • Notes • Recorded lessons</div>
+      <div style="color:var(--muted); margin-top:6px">© 2025 GaurCoder</div>
+    </footer>
+  </div>
+
+  <script>
+            // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+            });
+        });
+    // simple 3D card follow mouse
+    const card = document.getElementById('card3d');
+    document.querySelector('.panel-3d').addEventListener('mousemove', (e)=>{
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      const rx = (-y)*8;
+      const ry = x*12;
+      card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(10px)`;
+    });
+    document.querySelector('.panel-3d').addEventListener('mouseleave', ()=>{card.style.transform=''});
+  </script>
+</body>
+</html>
