@@ -1,198 +1,743 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GaurCoder - Krishna's Code</title>
-  <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="icon" type="image/png" href="assets/images/just_gaur.png" sizes="32x32">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>GaurCoder • Learn Python, Build AI</title>
+    <meta name="description" content="GaurCoder - 6-month Python & AI course. Live sessions, notes, recorded lessons, projects and capstones." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple: #6C2BD9;
+            --deep: #0B1B3F;
+            --gold: #F2C14E;
+            --bg1: linear-gradient(180deg, #041028 0%, var(--deep) 60%);
+            --glass: rgba(255, 255, 255, 0.04);
+            --muted: #c9d3ea;
+            --white: #EEF2FF;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: var(--bg1);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Utility classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .cta-btn {
+            padding: 8px 14px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, var(--purple), #3b0ddb);
+            color: var(--white);
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(108, 43, 217, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(108, 43, 217, 0.3);
+        }
+
+        /* NAV */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(8px);
+            background: linear-gradient(180deg, rgba(11, 27, 63, 0.85), rgba(11, 27, 63, 0.55));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: conic-gradient(from 200deg, var(--gold), var(--purple), #3b0ddb);
+            box-shadow: 0 8px 30px rgba(108, 43, 217, 0.2);
+        }
+
+        .brand {
+            font-weight: 800;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: all 0.18s;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 60;
+        }
+
+        .hamburger .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 10px;
+            transition: all 0.3s linear;
+        }
+
+        .hamburger.open .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.open .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Mobile navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(11, 27, 63, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 55;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-nav.open {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--white);
+            transition: color 0.2s;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--gold);
+        }
+
+        /* HERO */
+        .hero {
+            margin: 0 auto;
+            padding: 0 20px;
+            width:100%;
+            height:100vh;
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            align-items: center;
+            position: relative; 
+            overflow: hidden;
+        }
+
+        .hero-carousel-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .carousel-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(.4,0,.2,1);
+            z-index: 0;
+            pointer-events: none;
+            filter: brightness(0.55) blur(1.5px);
+        }
+        .carousel-img.active {
+            opacity: 1;
+        }
+        .hero > div:not(.hero-carousel-bg) {
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 40px;
+            line-height: 1.03;
+            margin: 0;
+        }
+
+        .hero p {
+            color: var(--muted);
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .hero .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* cube area */
+       
+        .cube-section {
+            width: 100%;
+            min-height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0; /* More vertical space */
+            background: none;
+            background: radial-gradient(circle at 40% 50%, #6C2BD9 0%, #99b5f5 100%);
+        }
+        .cube-wrap:focus {
+            outline: none;
+            box-shadow: none;
+        }
+        .cube-wrap:focus-visible {
+            outline: 3px solid rgba(108, 43, 217, 0.25);
+            outline-offset: 3px;
+            box-shadow: 0 10px 40px rgba(108, 43, 217, 0.18);
+        }
+        .cube-stage {
+            width: 100%;
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 0 40px; /* Add horizontal padding */
+            box-sizing: border-box;
+        }
+        .cube-wrap {
+            width: 280px;
+            height: 280px;
+            max-width: 90vw;
+            max-height: 60vw;
+            perspective: 1200px;
+            margin: 0 auto;
+            transition: width 0.2s, height 0.2s;
+        }
+        /* Responsive: even smaller on tablets/phones */
+        @media (max-width: 1000px) {
+            .cube-stage {
+                height: 320px;
+                padding: 0 10vw;
+            }
+            .cube-wrap {
+                width: 220px;
+                height: 220px;
+                max-width: 80vw;
+                max-height: 60vw;
+            }
+        }
+        @media (max-width: 600px) {
+            .cube-stage {
+                height: 180px;
+                padding: 0 4vw;
+            }
+            .cube-wrap {
+                width: 120px;
+                height: 120px;
+                max-width: 90vw;
+                max-height: 60vw;
+            }
+        }
+
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 120ms linear;
+        }
+
+        .cube .face {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .f1 {
+            transform: rotateY(0deg) translateZ(170px);
+        }
+
+        .f2 {
+            transform: rotateY(90deg) translateZ(170px);
+        }
+
+        .f3 {
+            transform: rotateY(180deg) translateZ(170px);
+        }
+
+        .f4 {
+            transform: rotateY(-90deg) translateZ(170px);
+        }
+
+        .f5 {
+            transform: rotateX(90deg) translateZ(170px);
+        }
+
+        .f6 {
+            transform: rotateX(-90deg) translateZ(170px);
+        }
+
+        /* smaller details */
+        .features {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            background: var(--glass);
+            padding: 12px 14px;
+            border-radius: 12px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        /* CONTACTS */
+        .contacts {
+            margin: 40px auto;
+            padding: 36px 20px;
+            background: linear-gradient(180deg, rgba(108, 43, 217, 0.06), rgba(255, 255, 255, 0.01));
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .contacts h3 {
+            margin: 0 0 12px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: var(--glass);
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .contact-card p {
+            color: var(--muted);
+        }
+
+        /* footer */
+        footer {
+            margin-top: 36px;
+            padding: 26px 20px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        /* responsive */
+        @media (max-width: 1000px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .cube-stage {
+                order: 2;
+            }
+
+            .cube-wrap {
+                width: 300px;
+                height: 300px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        /* mobile touch controls hint */
+        .controls-hint {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* accessibility focus */
+        a:focus, button:focus, .cube-wrap:focus {
+            outline: 3px solid rgba(108, 43, 217, 0.25);
+            outline-offset: 3px;
+        }
+        
+        .cube-wrap:focus {
+            box-shadow: 0 10px 40px rgba(108, 43, 217, 0.18);
+        }
+
+    </style>
 </head>
 <body>
-    <div class="main-container">
-        <nav id="navbar" class="visible">
-            <div class="brand"><img src="./assets/images/gaurLogo.png" alt="Gaur Coder Logo"></div>
-            <ul>
-              <li><a id="home">Home</a></li>
-              <li><a id="services">Services</a></li>
-              <li><a id="projects" href="pages/projects.html">Projects</a></li>
-              <li><a id="about" href="pages/about.html">About</a></li>
-              <li><a id="contact" >Contact</a></li>
-            </ul>
-            <div class="hamburger">
-              <div></div>
-              <div></div>
-              <div></div>
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="container nav-inner">
+            <div class="logo">
+                <div class="logo-mark" aria-hidden></div>
+                <div class="brand">GaurCoder</div>
             </div>
-          </nav>
-        <div id="container-section-1" class="container-section-1">
-            <div class="container-1">
-                <div class="content outerDiv">
-                  <!-- Title and Description -->
-                  <div class="innerDiv">
-                    <h1>Welcome to <br></h1>
-                    <h1 style="color:rgb(230, 0, 255)">GaurCoder</h1>
-                    <p>Explore the world of Coding and Creativity</p>
-                  </div>
-            
-                  <!-- Image with 3D effect -->
-                  <div class="image-container">
-                    <img src="./assets/images/newCoder.jpeg" alt="Welcome Image">
-                  </div>
-                </div>
-              </div>
-        </div>
-        <div class="code-typer">
-            <div style="font-family: 'Courier New', monospace; font-size: 24px; color: #fff; background-color: #3c3b6e; padding: 20px; text-align: center;" class="main">
-                <span id="typingText"></span>
-                <span class="cursor">|</span>
+            <div class="nav-links" role="menubar">
+                <a href="./index.html" role="menuitem">Home</a>
+                <a href="./pages/projects_new.html" role="menuitem">Projects</a>
+                <a href="./pages/services_new.html" role="menuitem">Services</a>
+                <a href="./index.html#contacts" role="menuitem">Contact</a>
+                <a class="cta-btn" href="#enroll">Enroll</a>
+            </div>
+            <div class="hamburger" id="hamburger-menu" aria-label="Open navigation menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
         </div>
-        <div class="effect-container">
-            <div class="hero-section">
-                <div class="cube-container">
-                  <div id="cube" class="cube">
-                    <div class="face face-front">
-                      <img src="assets/images/web.png" alt="Web Development" />
-                    </div>
-                    <div class="face face-back">
-                      <img src="assets/images/ml.png" alt="Machine Learning" />
-                    </div>
-                    <div class="face face-left">
-                      <img src="assets/images/ds.png" alt="Data Science" />
-                    </div>
-                    <div class="face face-right">
-                      <img src="assets/images/app.png" alt="Mobile Development" />
-                    </div>
-                    <div class="face face-top">
-                      <img src="assets/images/ai.png" alt="AI Programming" />
-                    </div>
-                    <div class="face face-bottom">
-                      <img src="assets/images/python.png" alt="Python" />
-                    </div>
-                  </div>
-                </div>
-              </div>              
-        </div>
-        <div class="code-typer">
-          <div style="font-family: 'Courier New', monospace; font-size: 24px; color: #fff; background-color: #3c3b6e; padding: 20px; text-align: center;" class="main">
-              <span id="typingText2"></span>
-              <span class="cursor">|</span>
-          </div>
-        </div>
-        <div id="carousel-container" class="carousel-container">
-          <div class="carousel">
-            <div class="carousel-item active">
-              <div class="carousel-inside">
-                <div class="carousel-right">
-                  <img src="assets/images/robo.jpg" alt="Course Image" class="course-image">
-                </div>
-                <div class="carousel-left">
-                  <h2 class="course-title">Artificial Intelligence Course</h2>
-                  <p class="course-description">Make Machines Smart like Humans </p>
-                  <a href="./pages/ai.html" class="glowing-text">Visit Course Page</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item next">
-              <div class="carousel-inside">
-                <div class="carousel-right">
-                  <img src="assets/images/ml.png" alt="Course Image" class="course-image">
-                </div>
-                <div class="carousel-left">
-                  <h2 class="course-title">Machine Learning Course</h2>
-                  <p class="course-description">Teach computers to learn and improve from experience!</p>
-                  <a href="./pages/machine_learning.html" class="glowing-text">Visit Course Page</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div class="carousel-inside">
-                <div class="carousel-right">
-                  <img src="assets/images/web.png" alt="Course Image" class="course-image">
-                </div>
-                <div class="carousel-left">
-                  <h2 class="course-title">Web Development Course</h2>
-                  <p class="course-description">Turn Ideas into Reality with Web Development</p>
-                  <a href="./pages/web_dev.html" class="glowing-text">Visit Course Page</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div class="carousel-inside">
-                <div class="carousel-right">
-                  <img src="assets/images/python.png" alt="Course Image" class="course-image">
-                </div>
-                <div class="carousel-left">
-                  <h2 class="course-title">Become a Python Developer</h2>
-                  <p class="course-description">Learn Python by creating 20 Games</p>
-                  <a href="./pages/python.html" class="glowing-text">Visit Course Page</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item prev">
-              <div class="carousel-inside">
-                <div class="carousel-right">
-                  <img src="assets/images/ds.png" alt="Course Image" class="course-image">
-                </div>
-                <div class="carousel-left">
-                  <h2 class="course-title">Data Science Course</h2>
-                  <p class="course-description">Uncover hidden insights in the Data</p>
-                  <a href="./pages/data_science.html" class="glowing-text">Visit Course Page</a>
-                </div>
-              </div>
-            </div>
-            
-            
-          </div>
-          
-          <button class="carousel-btn prev-btn">&larr;</button>
-          <button class="carousel-btn next-btn">&rarr;</button>
-        </div>
-
+    </nav>
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="./index.html">Home</a>
+        <a href="./pages/projects_new.html">Projects</a>
+        <a href="./pages/services_new.html">Services</a>
+        <a href="./index.html#contacts">Contact</a>
+        <a class="cta-btn" href="#enroll">Enroll</a>
     </div>
-    
 
-    <div id="footer-section" class="footer-section">
-        <div class="footer-container">
-            <div class="foot-section logo-section">
-                <div class="logo"><img src="./assets/images/gaurLogo.png" alt="Brand Logo" ></div>
+    <main>
+        <section id="home" class="hero" aria-labelledby="hero-heading">
+            <div class="hero-carousel-bg" aria-hidden="true">
+                <img src="./assets/images/python_hero.jpg" class="carousel-img active" alt="" />
+                <img src="./assets/images/ai_hero.png" class="carousel-img" alt="" />
+                <img src="./assets/images/ml_hero.png" class="carousel-img" alt="" />
+                <img src="./assets/images/ds_hero.png" class="carousel-img" alt="" />
+                <img src="./assets/images/startup_hero.png" class="carousel-img" alt="" />
+                <img src="./assets/images/app_hero.png" class="carousel-img" alt="" />
+            </div>
+            <div>
+                <h1 id="hero-heading">
+                    Master <span id="hero-topic" style="color:var(--gold);transition:opacity 0.5s;">Python</span>
+                </h1>
+                <p>Hands-on live classes, recorded sessions, notes for every lecture — build deployable projects and launch your first AI product.</p>
+                <div class="actions">
+                    <a class="cta-btn" href="#enroll">Join Cohort</a>
+                    <a href="#projects" style="padding:8px 12px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,.04);">See Projects</a>
+                </div>
+                <div class="features" aria-hidden>
+                    <div class="feature">Live + Recorded</div>
+                    <div class="feature">Notes for every class</div>
+                    <div class="feature">Deploy to Web & APK</div>
+                </div>
+            </div>
+        </section>
+        <section class="cube-section">
+          <div class="cube-stage" aria-hidden="true">
+                <div class="cube-wrap" id="cubeWrap" tabindex="0" aria-label="Interactive 3D cube">
+                    <div class="cube" id="cube">
+                        <div class="face f1"><img src="./assets/images/python.png" alt="Python"></div>
+                        <div class="face f2"><img src="./assets/images/ai.png" alt="Artificial Intelligence"></div>
+                        <div class="face f3"><img src="./assets/images/ml.png" alt="Machine Learning"></div>
+                        <div class="face f4"><img src="./assets/images/ds.png" alt="Data Science"></div>
+                        <div class="face f5"><img src="./assets/images/web.png" alt="Startup and Product Building"></div>
+                        <div class="face f6"><img src="./assets/images/app.png" alt="App Development"></div>
+                    </div>
+                </div>
+                <div class="controls-hint">Drag with mouse to rotate • On mobile use left/right arrow keys or swipe</div>
+            </div>
+        </section>
+
+        <section id="projects" class="container">
+            <h3 style="font-size:2rem; margin-bottom:8px; letter-spacing:-1px;">🚀 Projects — Mini (5) & Major (3 AI Capstones)</h3>
+            <p style="color:var(--muted); margin:8px 0 28px; font-size:1.1rem;">
+                Hands-on portfolio: <b>five mini-projects</b> to practice concepts and <b>three major AI projects</b> to showcase production-ready skills.
+            </p>
+            <div class="grid" style="gap:28px;">
+                <!-- Mini projects -->
+                <article class="mini" style="background:linear-gradient(120deg,rgba(108,43,217,0.10),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(108,43,217,0.07);transition:transform 0.18s; border:1.5px solid rgba(108,43,217,0.13);">
+                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>📝</span>1. Text Analyzer</h4>
+                <p>Build a CLI/GUI app to analyze word counts, sentiment, and keyword extraction.</p>
+                </article>
+                <article class="mini" style="background:linear-gradient(120deg,rgba(11,27,63,0.13),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(11,27,63,0.07);transition:transform 0.18s; border:1.5px solid rgba(11,27,63,0.13);">
+                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>🌦️</span>2. Weather Dashboard</h4>
+                <p>Consume public APIs to show weather, forecast charts, and caching strategies.</p>
+                </article>
+                <article class="mini" style="background:linear-gradient(120deg,rgba(242,193,78,0.10),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(242,193,78,0.07);transition:transform 0.18s; border:1.5px solid rgba(242,193,78,0.13);">
+                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>💸</span>3. Expense Tracker</h4>
+                <p>Create an OOP-based personal finance tracker with CSV/DB persistence and plots.</p>
+                </article>
+                <article class="mini" style="background:linear-gradient(120deg,rgba(108,43,217,0.08),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(108,43,217,0.07);transition:transform 0.18s; border:1.5px solid rgba(108,43,217,0.10);">
+                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>🎲</span>4. Quiz Game App</h4>
+                <p>Interactive quiz with scoring, timers, and high-score storage.</p>
+                </article>
+                <article class="mini" style="background:linear-gradient(120deg,rgba(11,27,63,0.10),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(11,27,63,0.07);transition:transform 0.18s; border:1.5px solid rgba(11,27,63,0.10);">
+                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>🤖</span>5. Basic Chatbot</h4>
+                <p>Rule-based bot for FAQs, then upgrade to ML-based intent detection.</p>
+                </article>
+                <!-- Major projects -->
+                <div class="majors" style="grid-column:span 12; gap:28px;">
+                <article class="major" style="background:linear-gradient(120deg,rgba(242,193,78,0.10),rgba(255,255,255,0.03));box-shadow:0 6px 24px 0 rgba(242,193,78,0.09);border:2px solid rgba(242,193,78,0.18);">
+                    <h4 style="font-size:1.22rem;display:flex;align-items:center;gap:8px;"><span>🎨</span>AI Artwork Creator <span style="font-size:0.9em;color:var(--gold);font-weight:800;">Capstone</span></h4>
+                    <p class="features" style="margin-bottom:8px;">Sketch-to-Art pipeline using diffusion models / ControlNet (concept). Students will build a web UI to upload sketches, generate styled images, and export high-res artwork.</p>
+                    <ul style="color:var(--muted); margin-top:8px; margin-bottom:0.5em;">
+                    <li>Input: hand-drawn sketch or image</li>
+                    <li>Model: Stable Diffusion / fine-tuning or prompt engineering</li>
+                    <li>Deliverable: Web demo (Gradio/Streamlit) + gallery</li>
+                    </ul>
+                </article>
+                <article class="major" style="background:linear-gradient(120deg,rgba(108,43,217,0.10),rgba(255,255,255,0.03));box-shadow:0 6px 24px 0 rgba(108,43,217,0.09);border:2px solid rgba(108,43,217,0.18);">
+                    <h4 style="font-size:1.22rem;display:flex;align-items:center;gap:8px;"><span>📚</span>AI Tutor Chatbot <span style="font-size:0.9em;color:var(--gold);font-weight:800;">Capstone</span></h4>
+                    <p class="features" style="margin-bottom:8px;">A study assistant that answers questions from uploaded notes/PDFs using embeddings + RAG. Includes chat UI, summary, and quiz generation features.</p>
+                    <ul style="color:var(--muted); margin-top:8px; margin-bottom:0.5em;">
+                    <li>Ingest: PDF, DOCX, or typed notes</li>
+                    <li>Tech: LangChain/LlamaIndex, vector DB (FAISS/Chromadb)</li>
+                    <li>Deliverable: Streamlit/FastAPI demo with chat + downloads</li>
+                    </ul>
+                </article>
+                <article class="major" style="background:linear-gradient(120deg,rgba(11,27,63,0.10),rgba(255,255,255,0.03));box-shadow:0 6px 24px 0 rgba(11,27,63,0.09);border:2px solid rgba(11,27,63,0.18);">
+                    <h4 style="font-size:1.22rem;display:flex;align-items:center;gap:8px;"><span>🎮</span>AI Fighting Game <span style="font-size:0.9em;color:var(--gold);font-weight:800;">Capstone</span></h4>
+                    <p class="features" style="margin-bottom:8px;">Tekken-like 2-player fighting game with PvAI. Built in Python (Kivy) for APK export. AI opponent can be rule-based, FSM, or RL-powered for adaptive gameplay.</p>
+                    <ul style="color:var(--muted); margin-top:8px; margin-bottom:0.5em;">
+                    <li>Gameplay: Local 2-player + single-player vs AI</li>
+                    <li>AI: Behavior trees / RL (optional advanced)</li>
+                    <li>Deliverable: Playable website demo + APK</li>
+                    </ul>
+                </article>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="curriculum" class="container">
+            <h2>Curriculum Snapshot</h2>
+            <p style="color:var(--muted)">Foundations → Data & ML → Deep Learning → Productization. Weekly cadence: Mon–Fri classes, Saturday doubts, Sunday mini-projects.</p>
+        </section>
+
+        <section id="contacts" class="container contacts" aria-labelledby="contact-heading">
+            <div class="contact-grid">
                 <div>
-                    <i>Create Experiences that Awes the Audience!! <br/>Develop Intelligence that Flaws the Negligence</i>
+                    <h3 id="contact-heading">Contact & Join</h3>
+                    <p class="muted">Secure your seat for the next cohort. We provide live sessions, notes, recorded videos, and project mentorship.</p>
+                    <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap">
+                        <a href="mailto:hello@gaurcoder.com" style="padding:10px 14px;border-radius:10px;background:var(--gold);color:#07102a;font-weight:700;text-decoration:none;transition:background-color 0.2s">Email Us</a>
+                        <a href="tel:+911234567890" style="padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.06);text-decoration:none;color:var(--white);transition:background-color 0.2s">Call</a>
+                    </div>
                 </div>
+                <aside class="contact-card" aria-hidden>
+                    <strong>Office</strong>
+                    <p style="margin-top:6px;color:var(--muted)">Online-first • Sessions recorded. Visit <a href="http://www.gaurcoder.com" style="color:var(--gold); text-decoration: underline;">www.gaurcoder.com</a></p>
+                    <div style="margin-top:12px">
+                        <div style="font-weight:700">Follow</div>
+                        <div style="display:flex; gap:8px; margin-top:8px">
+                            <a href="#">LinkedIn</a>
+                            <a href="#">YouTube</a>
+                            <a href="#">Instagram</a>
+                        </div>
+                    </div>
+                </aside>
             </div>
-            <div class="foot-section social-section">
-                <a href="https://www.facebook.com/profile.php?id=61569278614100" target="_blank"><i class="fab fa-facebook"></i></a>
-                <a href="https://www.instagram.com/gaurcoder001/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/company/gaurcoder" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://x.com/GaurCoder" target="_blank"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.youtube.com/@GaurCoder001" target="_blank"><i class="fab fa-youtube"></i></a>
-            </div>
-            <div class="foot-section">
-                <div class="course-footer-heading">Courses</div>
-                <ul>
-                    <li><a href="./pages/ai.html">Artificial Intelligence</a></li>
-                    <li><a href="./pages/machine_learning.html">Machine Learning</a></li>
-                    <li><a href="./pages/python.html">Python Developer</a></li>
-                    <li><a href="./pages/data_science.html">Data Science</a></li>
-                    <li><a href="./pages/web_dev.html">Full Stack Web Development</a></li>
-                </ul>
-            </div>
-            <div class="foot-section">
-                <div class="course-footer-heading">Contact Info</div>
-                <h3>Phone :</h3>
-                <p>+91-7982728512 </br>(Prateek Chawla)</p>
-                <h3>Email :</h3>
-                <p style="font-size : 16px;">prateekchawla2019@gmail.com</p>
-            </div>
-        </div>
-    </div>
-    <div class="rights-reserved">
-      <p>Copyright @2025 Gaur Coder. All Rights Reserved. </p>
-    </div>
+        </section>
 
+    </main>
 
-    
-<script src="./script.js"></script>
+    <footer>
+        <div class="container">© 2025 GaurCoder • Built with devotion & code</div>
+    </footer>
+
+    <script>
+
+        // Synchronized heading & background carousel
+        (function() {
+            const topics = [
+                "Python",
+                "Artificial Intelligence",
+                "Machine Learning",
+                "Data Science",
+                "Startup and Product Building",
+                "App Development"
+            ];
+            const imgs = document.querySelectorAll('.hero-carousel-bg .carousel-img');
+            const topicSpan = document.getElementById('hero-topic');
+            let idx = 0;
+            setInterval(() => {
+                // Fade out topic
+                topicSpan.style.opacity = 0;
+                setTimeout(() => {
+                    // Change topic text
+                    topicSpan.textContent = topics[idx];
+                    // Change background
+                    imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
+                    // Fade in topic
+                    topicSpan.style.opacity = 1;
+                    // Next index
+                    idx = (idx + 1) % topics.length;
+                }, 400);
+            }, 3800);
+        })();
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+            });
+        });
+
+        // 3D Cube interaction: mouse drag on desktop, touch swipe + arrow keys on mobile
+        (function(){
+    const cube = document.getElementById('cube');
+    const wrap = document.getElementById('cubeWrap');
+    let rotX = -18, rotY = 22;
+    let hovering = false;
+
+    function setRotationFromPointer(x, y, rect) {
+        // x, y: pointer position relative to wrap
+        // rect: bounding rect of wrap
+        // Map x from [0, width] to [-60, 60] degrees
+        // Map y from [0, height] to [-60, 60] degrees
+        const percentX = (x / rect.width - 0.5) * 2; // -1 to 1
+        const percentY = (y / rect.height - 0.5) * 2; // -1 to 1
+        rotY = percentX * 60;
+        rotX = -percentY * 60;
+        cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    }
+
+    wrap.addEventListener('mouseenter', () => { hovering = true; });
+    wrap.addEventListener('mouseleave', () => {
+        hovering = false;
+        // Optionally, reset to default position:
+        rotX = -18; rotY = 22;
+        cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    });
+
+    wrap.addEventListener('mousemove', (e) => {
+        if (!hovering) return;
+        const rect = wrap.getBoundingClientRect();
+        setRotationFromPointer(e.clientX - rect.left, e.clientY - rect.top, rect);
+    });
+
+    // Touch support for mobile
+    wrap.addEventListener('touchstart', (e) => {
+        hovering = true;
+        const t = e.touches[0];
+        const rect = wrap.getBoundingClientRect();
+        setRotationFromPointer(t.clientX - rect.left, t.clientY - rect.top, rect);
+    });
+    wrap.addEventListener('touchmove', (e) => {
+        if (!hovering) return;
+        const t = e.touches[0];
+        const rect = wrap.getBoundingClientRect();
+        setRotationFromPointer(t.clientX - rect.left, t.clientY - rect.top, rect);
+    });
+    wrap.addEventListener('touchend', () => {
+        hovering = false;
+        rotX = -18; rotY = 22;
+        cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    });
+
+    // Set initial position
+    cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+})();
+    </script>
 </body>
 </html>
