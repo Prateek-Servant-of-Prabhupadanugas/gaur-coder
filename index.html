@@ -688,13 +688,21 @@
     const cube = document.getElementById('cube');
     const wrap = document.getElementById('cubeWrap');
     let rotX = -18, rotY = 22;
+    let auto = true;
     let hovering = false;
+    let frame;
+
+    function render() {
+        if (auto) {
+            rotY += 0.6;
+            rotX += 0.15;
+        }
+        cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        frame = requestAnimationFrame(render);
+    }
 
     function setRotationFromPointer(x, y, rect) {
         // x, y: pointer position relative to wrap
-        // rect: bounding rect of wrap
-        // Map x from [0, width] to [-60, 60] degrees
-        // Map y from [0, height] to [-60, 60] degrees
         const percentX = (x / rect.width - 0.5) * 2; // -1 to 1
         const percentY = (y / rect.height - 0.5) * 2; // -1 to 1
         rotY = percentX * 60;
@@ -702,14 +710,14 @@
         cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
     }
 
-    wrap.addEventListener('mouseenter', () => { hovering = true; });
-    wrap.addEventListener('mouseleave', () => {
-        hovering = false;
-        // Optionally, reset to default position:
-        rotX = -18; rotY = 22;
-        cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    wrap.addEventListener('mouseenter', () => {
+        auto = false;
+        hovering = true;
     });
-
+    wrap.addEventListener('mouseleave', () => {
+        auto = true;
+        hovering = false;
+    });
     wrap.addEventListener('mousemove', (e) => {
         if (!hovering) return;
         const rect = wrap.getBoundingClientRect();
@@ -718,6 +726,7 @@
 
     // Touch support for mobile
     wrap.addEventListener('touchstart', (e) => {
+        auto = false;
         hovering = true;
         const t = e.touches[0];
         const rect = wrap.getBoundingClientRect();
@@ -730,13 +739,12 @@
         setRotationFromPointer(t.clientX - rect.left, t.clientY - rect.top, rect);
     });
     wrap.addEventListener('touchend', () => {
+        auto = true;
         hovering = false;
-        rotX = -18; rotY = 22;
-        cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
     });
 
-    // Set initial position
-    cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    // Start animation
+    render();
 })();
     </script>
 </body>
