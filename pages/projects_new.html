@@ -142,6 +142,7 @@
         
         .mobile-nav.open {
             transform: translateX(0);
+            display:flex;
         }
 
         .mobile-nav a {
@@ -153,6 +154,15 @@
 
         .mobile-nav a:hover {
             color: var(--gold);
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
         }
 
     /* hero */
@@ -192,12 +202,12 @@
       .panel-3d{height:220px}
       .mini{grid-column:span 12}
       .majors{grid-template-columns:1fr}
-      nav{display:none}
+      /* nav{display:none} */
     }
   </style>
 </head>
 <body>
-  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="container nav-inner">
             <div class="logo">
                 <div class="logo-mark" aria-hidden></div>
@@ -224,6 +234,7 @@
         <a href="./../index.html#contacts">Contact</a>
         <a class="cta-btn" href="#enroll">Enroll</a>
     </div>
+
   <div class="container">
     
     <main>
@@ -401,6 +412,37 @@
       card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(10px)`;
     });
     document.querySelector('.panel-3d').addEventListener('mouseleave', ()=>{card.style.transform=''});
+    function openEnrollPopup() {
+  document.getElementById('enroll-popup').style.display = 'flex';
+}
+function closeEnrollPopup() {
+  document.getElementById('enroll-popup').style.display = 'none';
+  document.getElementById('enroll-status').textContent = '';
+  document.getElementById('enroll-form').reset();
+}
+
+// Replace with your Google Apps Script web app URL:
+const scriptURL = 'YOUR_SCRIPT_URL';
+
+document.getElementById('enroll-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const status = document.getElementById('enroll-status');
+  status.textContent = 'Submitting...';
+  const data = Object.fromEntries(new FormData(this).entries());
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {'Content-Type':'application/json'}
+  })
+  .then(res => res.text())
+  .then(txt => {
+    status.textContent = 'Thank you! Your enrollment is received.';
+    setTimeout(closeEnrollPopup, 1800);
+  })
+  .catch(err => {
+    status.textContent = 'Error. Please try again.';
+  });
+});
   </script>
 </body>
 </html>

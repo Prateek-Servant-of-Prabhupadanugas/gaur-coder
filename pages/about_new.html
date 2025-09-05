@@ -145,6 +145,7 @@
         
         .mobile-nav.open {
             transform: translateX(0);
+            display:flex;
         }
 
         .mobile-nav a {
@@ -157,7 +158,15 @@
         .mobile-nav a:hover {
             color: var(--gold);
         }
-
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+        }
 
     .hero{position:relative; overflow:hidden;}
     .hero-inner{max-width:1100px; margin:40px auto; padding:0 22px; display:grid; grid-template-columns:1.2fr .8fr; gap:28px}

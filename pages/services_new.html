@@ -154,6 +154,7 @@
         
         .mobile-nav.open {
             transform: translateX(0);
+            display:flex;
         }
 
         .mobile-nav a {
@@ -165,6 +166,15 @@
 
         .mobile-nav a:hover {
             color: var(--gold);
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
         }
 
     .hero{
@@ -247,10 +257,10 @@
                 <div class="brand">GaurCoder</div>
             </div>
             <div class="nav-links" role="menubar">
-                <a href="./index.html" role="menuitem">Home</a>
-                <a href="./pages/projects_new.html" role="menuitem">Projects</a>
-                <a href="./pages/services_new.html" role="menuitem">Services</a>
-                <a href="./index.html#contacts" role="menuitem">Contact</a>
+                <a href="./../index.html" role="menuitem">Home</a>
+                <a href="./projects_new.html" role="menuitem">Projects</a>
+                <a href="./services_new.html" role="menuitem">Services</a>
+                <a href="./../index.html#contacts" role="menuitem">Contact</a>
                 <a class="cta-btn" href="#enroll">Enroll</a>
             </div>
             <div class="hamburger" id="hamburger-menu" aria-label="Open navigation menu">
@@ -261,10 +271,10 @@
         </div>
     </nav>
     <div class="mobile-nav" id="mobile-nav">
-        <a href="./index.html">Home</a>
-        <a href="./pages/projects_new.html">Projects</a>
-        <a href="./pages/services_new.html">Services</a>
-        <a href="./index.html#contacts">Contact</a>
+        <a href="./../index.html">Home</a>
+        <a href="./projects_new.html">Projects</a>
+        <a href="./services_new.html">Services</a>
+        <a href="./../index.html#contacts">Contact</a>
         <a class="cta-btn" href="#enroll">Enroll</a>
     </div>
 
