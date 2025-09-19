@@ -178,7 +178,7 @@
     .panel-3d{position:relative;height:320px; perspective:1200px}
     .card-3d{width:360px;height:260px; margin-left:auto; transform-style:preserve-3d; transition:transform .2s ease; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid rgba(255,255,255,.06); box-shadow:0 30px 60px rgba(0,0,0,.6)}
     .card-face{position:absolute; inset:12px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700}
-    .ribbon{position:absolute; left:-10px; top:18px; transform:rotate(-10deg); background:var(--gold); color:#07102a; padding:6px 12px; border-radius:8px; font-weight:800}
+    .ribbon{position:absolute; left:-10px; top:18px; transform:rotate(-10deg); background:var(--gold); color:#07102a; padding:6px 12px; border-radius:8px; font-weight:800 ; z-index:10;}
 
     /* sections */
     section{margin-top:40px}
@@ -249,7 +249,7 @@
         </div>
         <div class="panel-3d" aria-hidden>
           <div class="ribbon">6 Months • Live + Recorded</div>
-          <div class="card-3d" id="card3d">
+          <div class="card-3d" id="card3d" style="background-image: url('./../assets/images/gameProject.png') ;  background-position: center center;   background-size: cover; background-attachment: fixed;">
             <div class="card-face" style="transform:translateZ(40px)">AI • Projects • Deploy</div>
           </div>
         </div>
