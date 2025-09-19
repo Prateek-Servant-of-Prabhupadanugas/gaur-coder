@@ -1,262 +1,151 @@
-// navbar transparency 
-const navbar = document.getElementById('navbar');
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('nav ul');
+// Synchronized heading & background carousel
+        (function() {
+            const topics = [
+                "Python",
+                "Artificial Intelligence",
+                "Machine Learning",
+                "Data Science",
+                "Startup and Product Building",
+                "App Development"
+            ];
+            const imgs = document.querySelectorAll('.hero-carousel-bg .carousel-img');
+            const topicSpan = document.getElementById('hero-topic');
+            let idx = 0;
+            setInterval(() => {
+                // Fade out topic
+                topicSpan.style.opacity = 0;
+                setTimeout(() => {
+                    // Change topic text
+                    topicSpan.textContent = topics[idx];
+                    // Change background
+                    imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
+                    // Fade in topic
+                    topicSpan.style.opacity = 1;
+                    // Next index
+                    idx = (idx + 1) % topics.length;
+                }, 400);
+            }, 3800);
+        })();
 
-const homeButton = document.getElementById('home');
-const servicesButton = document.getElementById('services');
-const projectsButton = document.getElementById('projects');
-const aboutButton = document.getElementById('about');
-const contactButton = document.getElementById('contact');
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-const targetHomeSection = document.getElementById('container-section-1');
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
 
-homeButton.addEventListener('click' , function() {
-  targetHomeSection.scrollIntoView({
-    behaviour : 'smooth' , 
-    block : 'start' 
-  });
-  navMenu.classList.toggle('active');
-});
+        // Close mobile menu when a link is clicked
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+            });
+        });
 
-const targetServicesSection = document.getElementById('carousel-container');
+        // 3D Cube interaction: mouse drag on desktop, touch swipe + arrow keys on mobile
+        (function(){
+    const cube = document.getElementById('cube');
+    const wrap = document.getElementById('cubeWrap');
+    let rotX = -18, rotY = 22;
+    let auto = true;
+    let hovering = false;
+    let frame;
 
-servicesButton.addEventListener('click' , function() {
-  targetServicesSection.scrollIntoView({
-    behaviour : 'smooth' , 
-    block : 'start' 
-  });
-  navMenu.classList.toggle('active');
-});
-
-const targetContactsSection = document.getElementById('footer-section');
-
-contactButton.addEventListener('click' , function() {
-  targetContactsSection.scrollIntoView({
-    behaviour : 'smooth' , 
-    block : 'end' 
-  });
-  navMenu.classList.toggle('active');
-});
-
-
-
-
-
-
-
-
-// function to handle scroll event 
-window.onscroll = function() {
-  if (window.scrollY > 0){
-
-    navbar.classList.add('transparent') ; 
-    navbar.classList.remove('visible') ; 
-
-  } else {
-    navbar.classList.add('visible') ; 
-    navbar.classList.remove('transparent') ; 
-
-  }
-}
-    
-
-    
-    
-    
-    // Hamburger Script 
-
-
-    hamburger.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-    });
-    
-    const outerDiv = document.querySelector('.outerDiv');
-    const innerDiv = document.querySelector('.innerDiv');
-
-    window.addEventListener('mousemove', () => {
-      const rect = outerDiv.getBoundingClientRect() ; 
-      const x = e.clientX - rect.left ; 
-      const y = e.clientY - rect.top ; 
-
-      const tiltX = (x - rect.width / 2) / 20  ;
-      const tiltY = (y - rect.height / 2) / 20 ; 
-
-      innerDiv.style.transform = 'translate(-50% , -50%) rotateX(${tiltY}deg) rotateY(${tiltX}deg)'
-
-    });
-
-   
-
-
-
-
-
-
-    // Code Alive Element 
-  const text = "Make Code Come Alive";
-  let index = 0;
-  let isTyping = true;
-
-  function typeAndDeleteEffect() {
-    const typingTextElement = document.getElementById("typingText");
-
-    if (isTyping) {
-      // Typing the text
-      if (index < text.length) {
-        typingTextElement.textContent += text.charAt(index);
-        index++;
-        setTimeout(typeAndDeleteEffect, 80); // Typing speed
-      } else {
-        isTyping = false;
-        setTimeout(typeAndDeleteEffect, 1000); // Wait before deleting
-      }
-    } else {
-      // Deleting the text
-      if (index > 0) {
-        typingTextElement.textContent = text.substring(0, index - 1);
-        index--;
-        setTimeout(typeAndDeleteEffect, 100); // Deleting speed
-      } else {
-        isTyping = true;
-        setTimeout(typeAndDeleteEffect, 500); // Wait before typing again
-      }
-    }
-  }
-
-  // Start typing and deleting effect when the page loads
-  window.onload = typeAndDeleteEffect();
-
-
-  const text2 = "Services We Provide";
-  let index2 = 0;
-  let isTyping2 = true;
-
-  function typeAndDeleteEffect2() {
-    const typingTextElement2 = document.getElementById("typingText2");
-
-    if (isTyping2) {
-      // Typing the text
-      if (index2 < text2.length) {
-        typingTextElement2.textContent += text2.charAt(index2);
-        index2++;
-        setTimeout(typeAndDeleteEffect2, 80); // Typing speed
-      } else {
-        isTyping2 = false;
-        setTimeout(typeAndDeleteEffect2, 1000); // Wait before deleting
-      }
-    } else {
-      // Deleting the text
-      if (index2 > 0) {
-        typingTextElement2.textContent = text2.substring(0, index2 - 1);
-        index2--;
-        setTimeout(typeAndDeleteEffect2, 100); // Deleting speed
-      } else {
-        isTyping2 = true;
-        setTimeout(typeAndDeleteEffect2, 500); // Wait before typing again
-      }
-    }
-  }
-
-  window.onload = typeAndDeleteEffect2();
-
-
-
-
-    // Reset the content's tilt on resize
-    window.addEventListener('resize', () => {
-      content.style.transform = 'rotateY(0deg) rotateX(0deg)';
-    });
-
-    let rotationInterval;
-    let rotationX = 0;
-    let rotationY = 0;
-    let rotationZ = 0;
-
-    // Function to start continuous rotation
-    function startRotation() {
-        rotationInterval = setInterval(() => {
-        rotationX += 0.5; // Adjust rotation speed for X
-        rotationY += 1; // Adjust rotation speed for Y
-        rotationZ += 0.5; // Adjust rotation speed for Z
-        document.getElementById('cube').style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) rotateZ(${rotationZ}deg)`;
-        }, 20); // Adjust the interval speed for smoothness
+    function render() {
+        if (auto) {
+            rotY += 0.6;
+            rotX += 0.15;
+        }
+        cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        frame = requestAnimationFrame(render);
     }
 
-    // Start the rotation when the page loads
-    window.onload = startRotation;
+    function setRotationFromPointer(x, y, rect) {
+        // x, y: pointer position relative to wrap
+        const percentX = (x / rect.width - 0.5) * 2; // -1 to 1
+        const percentY = (y / rect.height - 0.5) * 2; // -1 to 1
+        rotY = percentX * 60;
+        rotX = -percentY * 60;
+        cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    }
 
-    // Border Effect 
-
-
-
-    // Star Effect 
-    // Select the container where the effect will happen
-  const effectContainer = document.querySelector('.hero-section');
-
-// Function to create stars/bubbles
-  function createStar(x, y) {
-  const star = document.createElement('div');
-  star.classList.add('star');
-  effectContainer.appendChild(star);
-
-  // Set the star's initial position to the mouse coordinates
-  star.style.left = `${x}px`;
-  star.style.top = `${y}px`;
-
-  // Randomize size and movement to make it more dynamic
-  const size = Math.random() * 10 + 10;
-  star.style.width = `${size}px`;
-  star.style.height = `${size}px`;
-
-  const moveX = (Math.random() - 0.5) * 50;
-  const moveY = (Math.random() - 0.5) * 50;
-  star.style.transform = `translate(${moveX}px, ${moveY}px)`;
-
-  // Remove the star after its animation ends
-  setTimeout(() => {
-    star.remove();
-  }, 2000); // Match with animation duration
-}
-
-// Track mouse movement inside the container
-  effectContainer.addEventListener('mousemove', (e) => {
-  const rect = effectContainer.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Create a star at the mouse position
-  createStar(x, y);
-});
-
-
-  // Carousel
-  let currentIndex = 0;
-  const items = document.querySelectorAll('.carousel-item');
-  
-  document.querySelector('.next-btn').addEventListener('click', () => {
-    updateCarousel((currentIndex + 1) % items.length);
-  });
-
-  document.querySelector('.prev-btn').addEventListener('click', () => {
-    updateCarousel((currentIndex - 1 + items.length) % items.length);
-  });
-
-  function updateCarousel(newIndex) {
-    items.forEach((item, index) => {
-      item.classList.remove('active', 'prev', 'next');
-      if (index === newIndex) {
-        item.classList.add('active');
-      } else if (index === (newIndex - 1 + items.length) % items.length) {
-        item.classList.add('prev');
-      } else if (index === (newIndex + 1) % items.length) {
-        item.classList.add('next');
-      }
+    wrap.addEventListener('mouseenter', () => {
+        auto = false;
+        hovering = true;
+    });
+    wrap.addEventListener('mouseleave', () => {
+        auto = true;
+        hovering = false;
+    });
+    wrap.addEventListener('mousemove', (e) => {
+        if (!hovering) return;
+        const rect = wrap.getBoundingClientRect();
+        setRotationFromPointer(e.clientX - rect.left, e.clientY - rect.top, rect);
     });
 
-    currentIndex = newIndex;
-  }
+    // Touch support for mobile
+    wrap.addEventListener('touchstart', (e) => {
+        auto = false;
+        hovering = true;
+        const t = e.touches[0];
+        const rect = wrap.getBoundingClientRect();
+        setRotationFromPointer(t.clientX - rect.left, t.clientY - rect.top, rect);
+    });
+    wrap.addEventListener('touchmove', (e) => {
+        if (!hovering) return;
+        const t = e.touches[0];
+        const rect = wrap.getBoundingClientRect();
+        setRotationFromPointer(t.clientX - rect.left, t.clientY - rect.top, rect);
+    });
+    wrap.addEventListener('touchend', () => {
+        auto = true;
+        hovering = false;
+    });
 
-  // Initialize the carousel with the first item active
-  updateCarousel(currentIndex);
+    // Start animation
+    render();
+})();
 
+    function openEnrollPopup() {
+    document.getElementById('enroll-popup').style.display = 'flex';
+    }
+    function closeEnrollPopup() {
+    document.getElementById('enroll-popup').style.display = 'none';
+    document.getElementById('enroll-status').textContent = '';
+    document.getElementById('enroll-form').reset();
+    }
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxb0kkLbhGSibG9_gWaVF1Vffg8H7AialAYVLkQlAdvdPiie0G6VzNdZ1hQlViYHXWE/exec';
+
+
+    const form = document.getElementById('enroll-form');
+    form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const status = document.getElementById('enroll-status');
+    status.textContent = 'Submitting...';
+    const formData = new FormData(form);
+    fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.text())
+    .then(txt => {
+        status.textContent = 'Thank you! Your enrollment is received.';
+        setTimeout(closeEnrollPopup, 1800);
+    })
+    .catch(err => {
+        status.textContent = 'Error. Please try again.';
+    });
+    });

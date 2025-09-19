@@ -215,10 +215,10 @@
             </div>
             <div class="nav-links" role="menubar">
                 <a href="./../index.html" role="menuitem">Home</a>
-                <a href="./projects_new.html" role="menuitem">Projects</a>
-                <a href="./services_new.html" role="menuitem">Services</a>
+                <a href="./projects.html" role="menuitem">Projects</a>
+                <a href="./services.html" role="menuitem">Services</a>
                 <a href="./../index.html#contacts" role="menuitem">Contact</a>
-                <a class="cta-btn" href="#enroll">Enroll</a>
+                <a class="cta-btn" onclick="openEnrollPopup()" href="#enroll">Enroll</a>
             </div>
             <div class="hamburger" id="hamburger-menu" aria-label="Open navigation menu">
                 <div class="bar"></div>
@@ -229,10 +229,10 @@
     </nav>
     <div class="mobile-nav" id="mobile-nav">
         <a href="./../index.html">Home</a>
-        <a href="./projects_new.html">Projects</a>
-        <a href="./services_new.html">Services</a>
+        <a href="./projects.html">Projects</a>
+        <a href="./services.html">Services</a>
         <a href="./../index.html#contacts">Contact</a>
-        <a class="cta-btn" href="#enroll">Enroll</a>
+        <a class="cta-btn" onclick="openEnrollPopup()" href="#enroll">Enroll</a>
     </div>
 
   <div class="container">
@@ -367,13 +367,41 @@
         </div>
       </section>
     </main>
+    <div id="enroll-popup" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(11,27,63,0.92); z-index:999; justify-content:center; align-items:center;">
+        <form id="enroll-form" style="background:#fff; color:#222; padding:32px 24px; border-radius:18px; box-shadow:0 8px 40px #0006; min-width:320px; max-width:90vw;">
+            <h2 style="margin-top:0;">Enroll Now</h2>
+            <label>Name*<br><input name="name" required></label><br><br>
+            <label>Email*<br><input name="email" type="email" required></label><br><br>
+            <label>Phone<br><input name="phone"></label><br><br>
+            <label>Why do you want to join?<br><textarea name="reason" rows="2"></textarea></label><br><br>
+            <label>Preferred batch time<br>
+            <select name="batch">
+                <option>Morning</option>
+                <option>Evening</option>
+                <option>Weekend</option>
+            </select>
+            </label><br><br>
+            <label>How did you hear about us?<br>
+            <select name="referral">
+                <option>Google Search</option>
+                <option>Instagram</option>
+                <option>Friend</option>
+                <option>Other</option>
+            </select>
+            </label><br><br>
+            <button type="submit" style="background:#6C2BD9; color:#fff; font-weight:700; border:none; border-radius:10px; padding:10px 18px;">Submit</button>
+            <button type="button" onclick="closeEnrollPopup()" style="margin-left:10px;">Cancel</button>
+            <div id="enroll-status" style="margin-top:12px; color:#6C2BD9;"></div>
+        </form>
+    </div>
+
 
     <footer>
       <div style="margin-top:36px">GaurCoder • <a href="http://www.gaurcoder.com">www.gaurcoder.com</a> • Live sessions • Notes • Recorded lessons</div>
       <div style="color:var(--muted); margin-top:6px">© 2025 GaurCoder</div>
     </footer>
   </div>
-
+  <script src="./script.js"></script>
   <script>
             // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -422,7 +450,8 @@ function closeEnrollPopup() {
 }
 
 // Replace with your Google Apps Script web app URL:
-const scriptURL = 'YOUR_SCRIPT_URL';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxb0kkLbhGSibG9_gWaVF1Vffg8H7AialAYVLkQlAdvdPiie0G6VzNdZ1hQlViYHXWE/exec';
+
 
 document.getElementById('enroll-form').addEventListener('submit', function(e) {
   e.preventDefault();
