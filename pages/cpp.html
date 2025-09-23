@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>C++ Programming Course • GaurCoder</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Learn C++ from basics to advanced with hands-on projects. Enroll now at GaurCoder." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pagestyles.css"/> 
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <a href="../index.html" class="logo">GaurCoder</a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../#courses">Courses</a>
+      <a href="../pages/projects_new.html">Projects</a>
+      <a href="../pages/services_new.html">Services</a>
+      <a href="../pages/contact.html">Contact</a>
+    </div>
+  </nav>
+  <main class="container">
+    <h1>C++ Programming: Basic to Advanced</h1>
+    <p>Learn C++ from scratch, build real-world projects, and master advanced concepts. Live sessions, notes, recorded lessons, and hands-on capstone projects.</p>
+    <video width="100%" controls poster="../assets/images/cpp_thumbnail.jpg">
+      <source src="../assets/videos/cpp_intro.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <h2>Project Showcase</h2>
+    <ul>
+      <li>Expense Tracker (OOP, File I/O)</li>
+      <li>Quiz Game (Classes, STL)</li>
+      <li>Mini Compiler (Advanced)</li>
+    </ul>
+    <button class="cta-btn" onclick="openEnrollPopup()">Enroll for C++</button>
+  </main>
+  <!-- Enroll Popup -->
+  <div id="enroll-popup">
+    <form id="enroll-form">
+      <h2>Enroll for C++ Course</h2>
+      <label>Name*<br><input name="name" required></label>
+      <label>Email*<br><input name="email" type="email" required></label>
+      <label>Phone<br><input name="phone"></label>
+      <label>Why do you want to join?<br><textarea name="reason" rows="2"></textarea></label>
+      <label>Preferred batch time<br>
+        <select name="batch">
+          <option>Morning</option>
+          <option>Evening</option>
+          <option>Weekend</option>
+        </select>
+      </label>
+      <label>How did you hear about us?<br>
+        <select name="referral">
+          <option>Google Search</option>
+          <option>Instagram</option>
+          <option>Friend</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <button type="submit">Submit</button>
+      <button type="button" onclick="closeEnrollPopup()">Cancel</button>
+      <div id="enroll-status"></div>
+    </form>
+  </div>
+  <footer>
+    &copy; 2025 GaurCoder • Learn Python, C++, AI & More
+  </footer>
+  <script>
+    // Popup logic
+    function openEnrollPopup() {
+      document.getElementById('enroll-popup').style.display = 'flex';
+    }
+    function closeEnrollPopup() {
+      document.getElementById('enroll-popup').style.display = 'none';
+      document.getElementById('enroll-status').textContent = '';
+      document.getElementById('enroll-form').reset();
+    }
+    // Form submission
+    const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL'; // <-- Replace with your Apps Script URL
+    document.getElementById('enroll-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const status = document.getElementById('enroll-status');
+      status.textContent = 'Submitting...';
+      const formData = new FormData(this);
+      fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.text())
+      .then(txt => {
+        status.textContent = 'Thank you! Your enrollment is received.';
+        setTimeout(closeEnrollPopup, 1800);
+      })
+      .catch(err => {
+        status.textContent = 'Error. Please try again.';
+      });
+    });
+  </script>
+</body>
+</html>
