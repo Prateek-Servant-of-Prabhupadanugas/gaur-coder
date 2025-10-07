@@ -23,10 +23,7 @@
   <main class="container">
     <h1>Java Language: Beginner to Advanced</h1>
     <p>Master Java programming, OOP, GUI, and build real-world projects.</p>
-    <video width="100%" controls poster="../assets/images/java_thumbnail.jpg">
-      <source src="../assets/videos/java_intro.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+
     <h2>Project Showcase</h2>
     <ul>
       <li>Library Management System</li>
@@ -76,7 +73,7 @@
       document.getElementById('enroll-status').textContent = '';
       document.getElementById('enroll-form').reset();
     }
-    const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL'; // <-- Replace with your Apps Script URL
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxb0kkLbhGSibG9_gWaVF1Vffg8H7AialAYVLkQlAdvdPiie0G6VzNdZ1hQlViYHXWE/exec';
     document.getElementById('enroll-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const status = document.getElementById('enroll-status');

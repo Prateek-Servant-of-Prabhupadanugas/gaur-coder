@@ -23,17 +23,14 @@
   <main class="container">
     <h1>C++ Programming: Basic to Advanced</h1>
     <p>Learn C++ from scratch, build real-world projects, and master advanced concepts. Live sessions, notes, recorded lessons, and hands-on capstone projects.</p>
-    <video width="100%" controls poster="../assets/images/cpp_thumbnail.jpg">
-      <source src="../assets/videos/cpp_intro.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+
     <h2>Project Showcase</h2>
     <ul>
       <li>Expense Tracker (OOP, File I/O)</li>
       <li>Quiz Game (Classes, STL)</li>
       <li>Mini Compiler (Advanced)</li>
     </ul>
-    <button class="cta-btn" onclick="openEnrollPopup()">Enroll for C++</button>
+  <button class="cta-btn" onclick="openEnrollPopup()">Enroll for C++</button>
   </main>
   <!-- Enroll Popup -->
   <div id="enroll-popup">
@@ -77,7 +74,7 @@
       document.getElementById('enroll-form').reset();
     }
     // Form submission
-    const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL'; // <-- Replace with your Apps Script URL
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxb0kkLbhGSibG9_gWaVF1Vffg8H7AialAYVLkQlAdvdPiie0G6VzNdZ1hQlViYHXWE/exec';
     document.getElementById('enroll-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const status = document.getElementById('enroll-status');
