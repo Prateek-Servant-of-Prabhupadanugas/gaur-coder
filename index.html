@@ -486,11 +486,13 @@
         /* --- Scroll Container (The Driver) --- */
         .sv-scroll-carousel-container {
             /* Height calculation remains the same */
-            height: calc(var(--scroll-height) + 100vh + 50vh); 
+            height: calc(var(--scroll-height) + 85vh + 50vh); 
             display: flex;
+            
             justify-content: center;
             align-items: flex-start; 
             padding-top: 50vh; 
+            margin : 0 ; 
             overflow-x: hidden; /* Prevent horizontal scrollbar during animation */
         }
 
@@ -643,14 +645,16 @@
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="container nav-inner">
             <div class="logo">
-                <div class="logo-mark" aria-hidden></div>
+                <div class="logo-mark" aria-hidden>
+                    <img class="logo-mark" src="./assets/images/GaurCoderLogoBlurr.png" alt="GaurLogo">
+                </div>
                 <div class="brand">GaurCoder</div>
             </div>
             <div class="nav-links" role="menubar">
                 <a href="./index.html" role="menuitem">Home</a>
                 <a href="#courses" role="menuitem">Courses</a>
                 <a href="./pages/projects.html" role="menuitem">Projects</a>
-                <a href="#services-section" role="menuitem">Services</a>
+                <a href="#services" role="menuitem">Services</a>
                 <a href="./index.html#contacts" role="menuitem">Contact</a>
                 <a class="cta-btn" onclick="openEnrollPopup()" >Enroll for Python</a>
             </div>
@@ -665,7 +669,7 @@
     <a href="./index.html">Home</a>
     <a href="#courses">Courses</a>
     <a href="./pages/projects.html">Projects</a>
-    <a href="#services-section">Services</a>
+    <a href="#services">Services</a>
     <a href="./index.html#contacts">Contact</a>
     <a class="cta-btn" onclick="openEnrollPopup()" href="#enroll">Enroll Now</a>
     </div>
@@ -712,7 +716,67 @@
             </div>
         </section>
     
+        
+        <section id="services" class="sv-scroll-carousel-container">
+            
+            <div class="sv-carousel-track">
+                <section>
+                    <div styles="text-align:center; margin:40px 0; height : 10%;">
+                        <h2>Scroll Down to Explore Services</h2>
+                    </div>
+                </section>
+                <div class="sv-carousel-card" id="card-1">
+                    <div class="sv-card-content">
+                        <img src="./assets/images/Ai_Automation.PNG" alt="Automation Designing for Businesses" class="sv-image">
+                        <h3>Automation Designing For Businesses</h3>
+                        <p>Automate Posts , Content Creation , Complaint Chatbot</p>
+                        <a href="./pages/automate-your-tasks.html" class="sv-card-link">Explore Details</a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-2">
+                    <div class="sv-card-content">
+                        <img src="./assets/images/web_image.PNG" alt="Build Website / WebApp" class="sv-image">
+                        <h3>Build Website / WebApp</h3>
+                        <p>Build a Professional Website for Business / Personal Portfolio </p>
+                        <a href="#" class="sv-card-link">Explore Details </a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-3">
+                    <div class="sv-card-content">
+                        <img class="sv-image" src="./assets/images/app_image.PNG" alt="Backend Scalability">
+                        <h3>Build Mobile Application</h3>
+                        <p>Build a Professional Android Application</p>
+                        <a href="#" class="sv-card-link">Explore Details</a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-4">
+                    <div class="sv-card-content">
+                        <img class="sv-image" src="./assets/images/videoEditing.PNG" alt="SEO Optimization">
+                        <h3>Video Editing</h3>
+                        <p>Get Professional Video Editing Services</p>
+                        <a href="#" class="sv-card-link">Explore Details</a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-5">
+                    <div class="sv-card-content">
+                        <img class="sv-image" src="./assets/images/digitalMarketingImage.PNG" alt="Digital Marketing">
+                        <h3>Digital Marketing (SEO and SMM)</h3>
+                        <p>Create More Digital Reach via SEO and Social Media </p>
+                        <a href="#" class="sv-card-link">Explore Details</a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-6">
+                    <div class="sv-card-content">
+                        <img class="sv-image" src="./assets/images/BusinessAnalytics.PNG" alt="Business Analysis Image Not Loaded">
+                        <h3>Business Analytics & Strategy</h3>
+                        <p>Get Business as per Best Insights through Data Analysis Dashboards</p>
+                        <a href="#" class="sv-card-link">Explore Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        
         <section id="courses" class="container">
         <h2>Courses Offered</h2>
         <div class="course-list" style="display:flex; flex-wrap:wrap; gap:24px;">
@@ -767,59 +831,6 @@
             <a href="./pages/webdev.html" class="cta-btn" style="margin-top:12px;">View Details</a>
             </div>
         </div>
-        </section>
-
-        <section class="sv-scroll-carousel-container">
-            <div class="sv-carousel-track">
-                <div class="sv-carousel-card" id="card-1">
-                    <div class="sv-card-content">
-                        <img src="./assets/images/Ai_Automation.PNG" alt="Automation Designing for Businesses" class="sv-image">
-                        <h3>Automation Designing For Businesses</h3>
-                        <p>Automate Posts , Content Creation , Complaint Chatbot</p>
-                        <a href="./pages/automate-your-tasks.html" class="sv-card-link">Explore Details</a>
-                    </div>
-                </div>
-                <div class="sv-carousel-card" id="card-2">
-                    <div class="sv-card-content">
-                        <img src="./assets/images/web_image.PNG" alt="Build Website / WebApp" class="sv-image">
-                        <h3>Build Website / WebApp</h3>
-                        <p>Build a Professional Website for Business / Personal Portfolio </p>
-                        <a href="#" class="sv-card-link">Explore Details </a>
-                    </div>
-                </div>
-                <div class="sv-carousel-card" id="card-3">
-                    <div class="sv-card-content">
-                        <img class="sv-image" src="./assets/images/app_image.PNG" alt="Backend Scalability">
-                        <h3>Build Mobile Application</h3>
-                        <p>Build a Professional Android Application</p>
-                        <a href="#" class="sv-card-link">Explore Details</a>
-                    </div>
-                </div>
-                <div class="sv-carousel-card" id="card-4">
-                    <div class="sv-card-content">
-                        <img class="sv-image" src="./assets/images/videoEditing.PNG" alt="SEO Optimization">
-                        <h3>Video Editing</h3>
-                        <p>Get Professional Video Editing Services</p>
-                        <a href="#" class="sv-card-link">Explore Details</a>
-                    </div>
-                </div>
-                <div class="sv-carousel-card" id="card-5">
-                    <div class="sv-card-content">
-                        <img class="sv-image" src="./assets/images/digitalMarketingImage.PNG" alt="Digital Marketing">
-                        <h3>Digital Marketing (SEO and SMM)</h3>
-                        <p>Create More Digital Reach via SEO and Social Media </p>
-                        <a href="#" class="sv-card-link">Explore Details</a>
-                    </div>
-                </div>
-                <div class="sv-carousel-card" id="card-6">
-                    <div class="sv-card-content">
-                        <img class="sv-image" src="./assets/images/BusinessAnalytics.PNG" alt="Business Analysis Image Not Loaded">
-                        <h3>Business Analytics & Strategy</h3>
-                        <p>Get Business as per Best Insights through Data Analysis Dashboards</p>
-                        <a href="#" class="sv-card-link">Explore Details</a>
-                    </div>
-                </div>
-            </div>
         </section>
 
         
