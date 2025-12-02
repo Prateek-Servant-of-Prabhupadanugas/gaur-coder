@@ -862,19 +862,19 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.carousel-card');
+            const cards = document.querySelectorAll('.sv-carousel-card');
 
             // --- Observer for 'in-view' (Pop Out/In) ---
             const popOutObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
+                        entry.target.classList.add('sv-in-view');
                     } else {
                         // When leaving the screen, remove 'in-view'
-                        entry.target.classList.remove('in-view');
+                        entry.target.classList.remove('sv-in-view');
                         // And also remove the motion classes to reset for the next time it appears
-                        entry.target.classList.remove('move-right', 'move-left');
-                        entry.target.classList.remove('active');
+                        entry.target.classList.remove('sv-move-right', 'move-left');
+                        entry.target.classList.remove('sv-active');
                     }
                 });
             }, {
@@ -894,21 +894,21 @@
                     // 1. Center/Active check (Same as before)
                     if (entry.isIntersecting) {
                         // isIntersecting is true within the central 5%
-                        card.classList.add('active');
-                        card.classList.remove('move-right', 'move-left'); // Ensure center card is horizontal
+                        card.classList.add('sv-active');
+                        card.classList.remove('sv-move-right', 'sv-move-left'); // Ensure center card is horizontal
                     } else {
-                        card.classList.remove('active');
+                        card.classList.remove('sv-active');
 
                         // 2. Horizontal Motion Check (Only if the card is in view, but not active)
                         // If the card is above the center line
                         if (boundingClientRect.bottom < viewportCenterY) {
-                            card.classList.add('move-left');
-                            card.classList.remove('move-right');
+                            card.classList.add('sv-move-left');
+                            card.classList.remove('sv-move-right');
                         } 
                         // If the card is below the center line
                         else if (boundingClientRect.top > viewportCenterY) {
-                            card.classList.add('move-right');
-                            card.classList.remove('move-left');
+                            card.classList.add('sv-move-right');
+                            card.classList.remove('sv-move-left');
                         }
                     }
                 });
