@@ -498,7 +498,7 @@
         .sv-carousel-track {
             position: sticky;
             top: 50%;
-            transform: translateY(-50%); 
+            transform: translateY(-11%); 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -508,10 +508,17 @@
         }
 
         /* --- Card Styles (The Base) --- */
+        .sv-image {
+            width : 80% ; 
+            height : 65% ; 
+            border-radius: 40%;
+            
+        }
         .sv-carousel-card {
             --card-size-active: 280px; 
             width: var(--card-size);
             height: var(--card-size);
+            color:black;
             background-color: #ffffff;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             border-radius: 12px;
@@ -551,6 +558,7 @@
         /* State when the card comes into view (Pop Out) */
         .sv-carousel-card.sv-in-view {
             opacity: 1;
+             
             /* In-view state is centered (no X translation) and full scale */
             transform: scale(1) translateX(0); 
         }
@@ -560,9 +568,31 @@
             width: var(--card-size-active);
             height: var(--card-size-active);
             z-index: 10;
+         
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
             background-color: #e6f2ff;
             /* No X translation needed here, as it's already centered by .in-view */
+        }
+
+        .sv-card-link {
+            background-color :#3b0ddb ; 
+            font-size : small; 
+            padding : 5px 7px ; 
+            color :#fff; 
+            border-radius : 8px ;
+
+        }
+        .sv-active .sv-card-link {
+            font-size :medium ; 
+            padding : 10px 14px ;
+        }
+        .sv-in-view .sv-card-content h3 {
+            font-size : small ; 
+            margin : 0 ; 
+        }
+        .sv-active .sv-card-content h3 {
+            font-size :large;
+            margin : 0 ; 
         }
 
         /* 2. Horizontal Oscillation Classes (Applied by JS) */
@@ -737,50 +767,50 @@
             <div class="sv-carousel-track">
                 <div class="sv-carousel-card" id="card-1">
                     <div class="sv-card-content">
-                        <img src="https://via.placeholder.com/200x200?text=Card+1" alt="Design Principles">
-                        <h3>Design Principles</h3>
-                        <p>Focus on user experience and accessibility first.</p>
-                        <a href="#" class="sv-card-link">Explore Details</a>
+                        <img src="./assets/images/Ai_Automation.PNG" alt="Automation Designing for Businesses" class="sv-image">
+                        <h3>Automation Designing For Businesses</h3>
+                        <p>Automate Posts , Content Creation , Complaint Chatbot</p>
+                        <a href="./pages/automate-your-tasks.html" class="sv-card-link">Explore Details</a>
                     </div>
                 </div>
                 <div class="sv-carousel-card" id="card-2">
                     <div class="sv-card-content">
-                        <img src="https://via.placeholder.com/200x200?text=Card+2" alt="Frontend Stacks">
-                        <h3>Frontend Stacks</h3>
-                        <p>Modern frameworks offer powerful state management.</p>
-                        <a href="#" class="sv-card-link">View Projects</a>
+                        <img src="./assets/images/web_image.PNG" alt="Build Website / WebApp" class="sv-image">
+                        <h3>Build Website / WebApp</h3>
+                        <p>Build a Professional Website for Business / Personal Portfolio </p>
+                        <a href="#" class="sv-card-link">Explore Details </a>
                     </div>
                 </div>
                 <div class="sv-carousel-card" id="card-3">
                     <div class="sv-card-content">
-                        <img src="https://via.placeholder.com/200x200?text=Card+3" alt="Backend Scalability">
-                        <h3>Backend Scalability</h3>
-                        <p>Choosing the right database for your traffic needs.</p>
-                        <a href="#" class="sv-card-link">Read Guide</a>
+                        <img class="sv-image" src="./assets/images/app_image.PNG" alt="Backend Scalability">
+                        <h3>Build Mobile Application</h3>
+                        <p>Build a Professional Android Application</p>
+                        <a href="#" class="sv-card-link">Explore Details</a>
                     </div>
                 </div>
                 <div class="sv-carousel-card" id="card-4">
                     <div class="sv-card-content">
-                        <img src="https://via.placeholder.com/200x200?text=Card+4" alt="SEO Optimization">
-                        <h3>SEO Optimization</h3>
-                        <p>Technical SEO is crucial for organic reach growth.</p>
-                        <a href="#" class="sv-card-link">Get Tips</a>
+                        <img class="sv-image" src="./assets/images/videoEditing.PNG" alt="SEO Optimization">
+                        <h3>Video Editing</h3>
+                        <p>Get Professional Video Editing Services</p>
+                        <a href="#" class="sv-card-link">Explore Details</a>
                     </div>
                 </div>
                 <div class="sv-carousel-card" id="card-5">
                     <div class="sv-card-content">
-                        <img src="https://via.placeholder.com/200x200?text=Card+5" alt="Wireframing">
-                        <h3>Wireframing Process</h3>
-                        <p>Sketching user flows before diving into code.</p>
-                        <a href="#" class="sv-card-link">Start Sketching</a>
+                        <img class="sv-image" src="./assets/images/digitalMarketingImage.PNG" alt="Digital Marketing">
+                        <h3>Digital Marketing (SEO and SMM)</h3>
+                        <p>Create More Digital Reach via SEO and Social Media to increase your Sales</p>
+                        <a href="#" class="sv-card-link">Explore Details</a>
                     </div>
                 </div>
                 <div class="sv-carousel-card" id="card-6">
                     <div class="sv-card-content">
-                        <img src="https://via.placeholder.com/200x200?text=Card+6" alt="Component Libraries">
-                        <h3>Component Libraries</h3>
-                        <p>Building reusable UI elements for speed.</p>
-                        <a href="#" class="sv-card-link">Explore UI Kits</a>
+                        <img class="sv-image" src="https://via.placeholder.com/200x200?text=Card+6" alt="Component Libraries">
+                        <h3>Business Analytics & Strategy</h3>
+                        <p>Get Business as per Best Insights through Data Analysis Dashboards</p>
+                        <a href="#" class="sv-card-link">Explore Details</a>
                     </div>
                 </div>
             </div>
@@ -841,6 +871,7 @@
                 <option>Instagram</option>
                 <option>Friend</option>
                 <option>Other</option>
+                <option >Sales Team</option>
             </select>
             </label><br><br>
             <button type="submit" style="background:#6C2BD9; color:#fff; font-weight:700; border:none; border-radius:10px; padding:10px 18px;">Submit</button>
