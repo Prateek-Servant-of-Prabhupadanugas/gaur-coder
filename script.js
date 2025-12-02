@@ -1,11 +1,11 @@
 // Synchronized heading & background carousel
         (function() {
             const topics = [
+                "AI Automation",
                 "Python",
                 "Artificial Intelligence",
                 "Machine Learning",
                 "Data Science",
-                "Startup and Product Building",
                 "App Development"
             ];
             const imgs = document.querySelectorAll('.hero-carousel-bg .carousel-img');
@@ -149,3 +149,5 @@
         status.textContent = 'Error. Please try again.';
     });
     });
+
+    

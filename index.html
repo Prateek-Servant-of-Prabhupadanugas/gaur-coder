@@ -6,6 +6,7 @@
     <title>GaurCoder • Learn Python, Build AI</title>
     <meta name="description" content="GaurCoder - 6-month Python & AI course. Live sessions, notes, recorded lessons, projects and capstones." />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/images/gaurLogo.png" type="image/png" />
     <style>
         :root {
             --purple: #6C2BD9;
@@ -457,6 +458,139 @@
             box-shadow: 0 10px 40px rgba(108, 43, 217, 0.18);
         }
 
+        :root {
+            /* Define the core card dimensions */
+            --card-size: 200px; 
+            --overlap-amount: 40px; 
+            
+            /* CALCULATIONS: */
+            --card-scroll-step: calc(var(--card-size) - var(--overlap-amount)); 
+            --total-cards: 6; 
+            --scroll-height: calc(var(--card-scroll-step) * (var(--total-cards) - 1));
+
+            /* New Variable for Oscillation Distance */
+            --horizontal-offset: 150px; 
+        }
+
+        /* --- Placeholder Scroll Space --- */
+        .top-placeholder {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: #666;
+            text-align: center;
+        }
+
+        /* --- Scroll Container (The Driver) --- */
+        .sv-scroll-carousel-container {
+            /* Height calculation remains the same */
+            height: calc(var(--scroll-height) + 100vh + 50vh); 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            padding-top: 50vh; 
+            overflow-x: hidden; /* Prevent horizontal scrollbar during animation */
+        }
+
+        /* --- Carousel Track (The Fixed Positioner) --- */
+        .sv-carousel-track {
+            position: sticky;
+            top: 50%;
+            transform: translateY(-50%); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: calc(var(--overlap-amount) * -1); 
+            padding: 0;
+            margin: 0;
+        }
+
+        /* --- Card Styles (The Base) --- */
+        .sv-carousel-card {
+            --card-size-active: 280px; 
+            width: var(--card-size);
+            height: var(--card-size);
+            background-color: #ffffff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            padding: 15px;
+            box-sizing: border-box;
+            cursor: pointer;
+            
+            /* 1. INITIAL STATE: Invisible, small, and pushed left by default */
+            opacity: 0;
+            transform: scale(0.5) translateX(calc(-1 * var(--horizontal-offset))); 
+            
+            /* Animation transition settings */
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        opacity 0.4s ease-out, 
+                        box-shadow 0.3s ease,
+                        width 0.4s, height 0.4s;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            will-change: transform, opacity; /* Optimization for smooth animation */
+        }
+
+        .sv-card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* ... (Card content styles like img, h3, p, a remain the same) ... */
+
+        /* --- Active/Center Card States (Controlled by JS) --- */
+
+        /* State when the card comes into view (Pop Out) */
+        .sv-carousel-card.sv-in-view {
+            opacity: 1;
+            /* In-view state is centered (no X translation) and full scale */
+            transform: scale(1) translateX(0); 
+        }
+
+        /* State when the card is the active/center card (Biggest Size) */
+        .sv-carousel-card.sv-active {
+            width: var(--card-size-active);
+            height: var(--card-size-active);
+            z-index: 10;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            background-color: #e6f2ff;
+            /* No X translation needed here, as it's already centered by .in-view */
+        }
+
+        /* 2. Horizontal Oscillation Classes (Applied by JS) */
+
+        /* State for cards BELOW the center (move right) */
+        .sv-carousel-card.sv-move-right {
+            /* Pushes the card to the right */
+            transform: scale(1) translateX(var(--horizontal-offset)); 
+            opacity: 0.5;
+        }
+
+        /* State for cards ABOVE the center (move left - which is the default, but we ensure it) */
+        .sv-carousel-card.sv-move-left {
+            /* Pushes the card to the left */
+            transform: scale(1) translateX(calc(-1 * var(--horizontal-offset)));
+            opacity: 0.5;
+        }
+
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 600px) {
+            :root {
+                --card-size: 150px; 
+                --overlap-amount: 30px;
+                --horizontal-offset: 80px; /* Reduced offset for mobile */
+            }
+            /* ... (Other mobile styles remain the same) ... */
+        }
     </style>
     
 </head>
@@ -480,7 +614,7 @@
                 <a href="./index.html" role="menuitem">Home</a>
                 <a href="#courses" role="menuitem">Courses</a>
                 <a href="./pages/projects.html" role="menuitem">Projects</a>
-                <a href="./pages/services.html" role="menuitem">Services</a>
+                <a href="#services-section" role="menuitem">Services</a>
                 <a href="./index.html#contacts" role="menuitem">Contact</a>
                 <a class="cta-btn" onclick="openEnrollPopup()" >Enroll for Python</a>
             </div>
@@ -495,28 +629,28 @@
     <a href="./index.html">Home</a>
     <a href="#courses">Courses</a>
     <a href="./pages/projects.html">Projects</a>
-    <a href="./pages/services.html">Services</a>
+    <a href="#services-section">Services</a>
     <a href="./index.html#contacts">Contact</a>
-    <a class="cta-btn" onclick="openEnrollPopup()" href="#enroll">Enroll for Python</a>
+    <a class="cta-btn" onclick="openEnrollPopup()" href="#enroll">Enroll Now</a>
     </div>
 
     <main>
         <section id="home" class="hero" aria-labelledby="hero-heading">
             <div class="hero-carousel-bg" aria-hidden="true">
-                <img src="./assets/images/python_hero.jpg" class="carousel-img active" alt="" />
+                <img src="./assets/images/automation_hero.png" class="carousel-img active" alt="" />
+                <img src="./assets/images/python_hero.jpg" class="carousel-img" alt="" />
                 <img src="./assets/images/ai_hero.png" class="carousel-img" alt="" />
                 <img src="./assets/images/ml_hero.png" class="carousel-img" alt="" />
                 <img src="./assets/images/ds_hero.png" class="carousel-img" alt="" />
-                <img src="./assets/images/startup_hero.png" class="carousel-img" alt="" />
                 <img src="./assets/images/app_hero.png" class="carousel-img" alt="" />
             </div>
             <div>
                 <h1 id="hero-heading">
-                    Master <span id="hero-topic" style="color:var(--gold);transition:opacity 0.5s;">Python</span>
+                    Master <span id="hero-topic" style="color:var(--gold);transition:opacity 0.5s;">AI Automations</span>
                 </h1>
-                <p>Hands-on live classes, recorded sessions, notes for every lecture — build deployable projects and launch your first AI product.</p>
+                <p>Hands-on live classes, recorded sessions, notes for every lecture — Build Business Standard AI Automations </p>
                 <div class="actions">
-                    <a class="cta-btn" onclick="openEnrollPopup()" href="#enroll">Enroll for Python</a>
+                    <a class="cta-btn" onclick="openEnrollPopup()" href="#enroll">Enroll Now</a>
                     <a href="#projects" style="padding:8px 12px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,.04);">See Projects</a>
                 </div>
                 <div class="features" aria-hidden>
@@ -547,7 +681,15 @@
         <h2>Courses Offered</h2>
         <div class="course-list" style="display:flex; flex-wrap:wrap; gap:24px;">
             <!-- C++ Course Card -->
+
             <div class="course-card" style="background:var(--glass); border-radius:14px; padding:20px; width:320px;">
+            <h3>AI Automations</h3>
+            <p>Master Business Standard AI Automations using Power Automate and n8n</p>
+            <!-- Video removed -->
+            <a href="./pages/automation.html" class="cta-btn" style="margin-top:12px;">View Details</a>
+            </div>
+            <div class="course-card" style="background:var(--glass); border-radius:14px; padding:20px; width:320px;">
+                
             <h3>C++ Programming</h3>
             <p>Basic to Advanced • Projects & Capstone</p>
             <!-- Video removed -->
@@ -591,68 +733,62 @@
         </div>
         </section>
 
-        
-
-        <section id="projects" class="container">
-            <h3 style="font-size:2rem; margin-bottom:8px; letter-spacing:-1px;">🚀 Projects — Mini (5) & Major (3 AI Capstones)</h3>
-            <p style="color:var(--muted); margin:8px 0 28px; font-size:1.1rem;">
-                Hands-on portfolio: <b>five mini-projects</b> to practice concepts and <b>three major AI projects</b> to showcase production-ready skills.
-            </p>
-            <div class="grid" style="gap:28px;">
-                <!-- Mini projects -->
-                <article class="mini" style="background:linear-gradient(120deg,rgba(108,43,217,0.10),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(108,43,217,0.07);transition:transform 0.18s; border:1.5px solid rgba(108,43,217,0.13);">
-                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>📝</span>1. Text Analyzer</h4>
-                <p>Build a CLI/GUI app to analyze word counts, sentiment, and keyword extraction.</p>
-                </article>
-                <article class="mini" style="background:linear-gradient(120deg,rgba(11,27,63,0.13),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(11,27,63,0.07);transition:transform 0.18s; border:1.5px solid rgba(11,27,63,0.13);">
-                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>🌦️</span>2. Weather Dashboard</h4>
-                <p>Consume public APIs to show weather, forecast charts, and caching strategies.</p>
-                </article>
-                <article class="mini" style="background:linear-gradient(120deg,rgba(242,193,78,0.10),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(242,193,78,0.07);transition:transform 0.18s; border:1.5px solid rgba(242,193,78,0.13);">
-                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>💸</span>3. Expense Tracker</h4>
-                <p>Create an OOP-based personal finance tracker with CSV/DB persistence and plots.</p>
-                </article>
-                <article class="mini" style="background:linear-gradient(120deg,rgba(108,43,217,0.08),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(108,43,217,0.07);transition:transform 0.18s; border:1.5px solid rgba(108,43,217,0.10);">
-                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>🎲</span>4. Quiz Game App</h4>
-                <p>Interactive quiz with scoring, timers, and high-score storage.</p>
-                </article>
-                <article class="mini" style="background:linear-gradient(120deg,rgba(11,27,63,0.10),rgba(255,255,255,0.03));box-shadow:0 4px 18px 0 rgba(11,27,63,0.07);transition:transform 0.18s; border:1.5px solid rgba(11,27,63,0.10);">
-                <h4 style="display:flex;align-items:center;gap:8px;font-size:1.18rem;"><span>🤖</span>5. Basic Chatbot</h4>
-                <p>Rule-based bot for FAQs, then upgrade to ML-based intent detection.</p>
-                </article>
-                <!-- Major projects -->
-                <div class="majors" style="grid-column:span 12; gap:28px;">
-                <article class="major" style="background:linear-gradient(120deg,rgba(242,193,78,0.10),rgba(255,255,255,0.03));box-shadow:0 6px 24px 0 rgba(242,193,78,0.09);border:2px solid rgba(242,193,78,0.18);">
-                    <h4 style="font-size:1.22rem;display:flex;align-items:center;gap:8px;"><span>🎨</span>AI Artwork Creator <span style="font-size:0.9em;color:var(--gold);font-weight:800;">Capstone</span></h4>
-                    <p class="features" style="margin-bottom:8px;">Sketch-to-Art pipeline using diffusion models / ControlNet (concept). Students will build a web UI to upload sketches, generate styled images, and export high-res artwork.</p>
-                    <ul style="color:var(--muted); margin-top:8px; margin-bottom:0.5em;">
-                    <li>Input: hand-drawn sketch or image</li>
-                    <li>Model: Stable Diffusion / fine-tuning or prompt engineering</li>
-                    <li>Deliverable: Web demo (Gradio/Streamlit) + gallery</li>
-                    </ul>
-                </article>
-                <article class="major" style="background:linear-gradient(120deg,rgba(108,43,217,0.10),rgba(255,255,255,0.03));box-shadow:0 6px 24px 0 rgba(108,43,217,0.09);border:2px solid rgba(108,43,217,0.18);">
-                    <h4 style="font-size:1.22rem;display:flex;align-items:center;gap:8px;"><span>📚</span>AI Tutor Chatbot <span style="font-size:0.9em;color:var(--gold);font-weight:800;">Capstone</span></h4>
-                    <p class="features" style="margin-bottom:8px;">A study assistant that answers questions from uploaded notes/PDFs using embeddings + RAG. Includes chat UI, summary, and quiz generation features.</p>
-                    <ul style="color:var(--muted); margin-top:8px; margin-bottom:0.5em;">
-                    <li>Ingest: PDF, DOCX, or typed notes</li>
-                    <li>Tech: LangChain/LlamaIndex, vector DB (FAISS/Chromadb)</li>
-                    <li>Deliverable: Streamlit/FastAPI demo with chat + downloads</li>
-                    </ul>
-                </article>
-                <article class="major" style="background:linear-gradient(120deg,rgba(11,27,63,0.10),rgba(255,255,255,0.03));box-shadow:0 6px 24px 0 rgba(11,27,63,0.09);border:2px solid rgba(11,27,63,0.18);">
-                    <h4 style="font-size:1.22rem;display:flex;align-items:center;gap:8px;"><span>🎮</span>AI Fighting Game <span style="font-size:0.9em;color:var(--gold);font-weight:800;">Capstone</span></h4>
-                    <p class="features" style="margin-bottom:8px;">Tekken-like 2-player fighting game with PvAI. Built in Python (Kivy) for APK export. AI opponent can be rule-based, FSM, or RL-powered for adaptive gameplay.</p>
-                    <ul style="color:var(--muted); margin-top:8px; margin-bottom:0.5em;">
-                    <li>Gameplay: Local 2-player + single-player vs AI</li>
-                    <li>AI: Behavior trees / RL (optional advanced)</li>
-                    <li>Deliverable: Playable website demo + APK</li>
-                    </ul>
-                </article>
+        <section class="sv-scroll-carousel-container">
+            <div class="sv-carousel-track">
+                <div class="sv-carousel-card" id="card-1">
+                    <div class="sv-card-content">
+                        <img src="https://via.placeholder.com/200x200?text=Card+1" alt="Design Principles">
+                        <h3>Design Principles</h3>
+                        <p>Focus on user experience and accessibility first.</p>
+                        <a href="#" class="sv-card-link">Explore Details</a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-2">
+                    <div class="sv-card-content">
+                        <img src="https://via.placeholder.com/200x200?text=Card+2" alt="Frontend Stacks">
+                        <h3>Frontend Stacks</h3>
+                        <p>Modern frameworks offer powerful state management.</p>
+                        <a href="#" class="sv-card-link">View Projects</a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-3">
+                    <div class="sv-card-content">
+                        <img src="https://via.placeholder.com/200x200?text=Card+3" alt="Backend Scalability">
+                        <h3>Backend Scalability</h3>
+                        <p>Choosing the right database for your traffic needs.</p>
+                        <a href="#" class="sv-card-link">Read Guide</a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-4">
+                    <div class="sv-card-content">
+                        <img src="https://via.placeholder.com/200x200?text=Card+4" alt="SEO Optimization">
+                        <h3>SEO Optimization</h3>
+                        <p>Technical SEO is crucial for organic reach growth.</p>
+                        <a href="#" class="sv-card-link">Get Tips</a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-5">
+                    <div class="sv-card-content">
+                        <img src="https://via.placeholder.com/200x200?text=Card+5" alt="Wireframing">
+                        <h3>Wireframing Process</h3>
+                        <p>Sketching user flows before diving into code.</p>
+                        <a href="#" class="sv-card-link">Start Sketching</a>
+                    </div>
+                </div>
+                <div class="sv-carousel-card" id="card-6">
+                    <div class="sv-card-content">
+                        <img src="https://via.placeholder.com/200x200?text=Card+6" alt="Component Libraries">
+                        <h3>Component Libraries</h3>
+                        <p>Building reusable UI elements for speed.</p>
+                        <a href="#" class="sv-card-link">Explore UI Kits</a>
+                    </div>
                 </div>
             </div>
         </section>
 
+        
+
+        
 
         <section id="curriculum" class="container">
             <h2>Curriculum Snapshot</h2>
@@ -724,7 +860,72 @@
             &copy; 2025 GaurCoder • Built with devotion & code
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.carousel-card');
 
+            // --- Observer for 'in-view' (Pop Out/In) ---
+            const popOutObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        // When leaving the screen, remove 'in-view'
+                        entry.target.classList.remove('in-view');
+                        // And also remove the motion classes to reset for the next time it appears
+                        entry.target.classList.remove('move-right', 'move-left');
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, {
+                root: null, 
+                threshold: 0.05 // Lower threshold for earlier pop-out
+            });
+
+            // --- Observer for 'active' and Horizontal Motion ---
+            const activeAndMotionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const card = entry.target;
+                    
+                    // The IntersectionRect is the part of the card visible in the viewport.
+                    const boundingClientRect = card.getBoundingClientRect();
+                    const viewportCenterY = window.innerHeight / 2;
+
+                    // 1. Center/Active check (Same as before)
+                    if (entry.isIntersecting) {
+                        // isIntersecting is true within the central 5%
+                        card.classList.add('active');
+                        card.classList.remove('move-right', 'move-left'); // Ensure center card is horizontal
+                    } else {
+                        card.classList.remove('active');
+
+                        // 2. Horizontal Motion Check (Only if the card is in view, but not active)
+                        // If the card is above the center line
+                        if (boundingClientRect.bottom < viewportCenterY) {
+                            card.classList.add('move-left');
+                            card.classList.remove('move-right');
+                        } 
+                        // If the card is below the center line
+                        else if (boundingClientRect.top > viewportCenterY) {
+                            card.classList.add('move-right');
+                            card.classList.remove('move-left');
+                        }
+                    }
+                });
+            }, {
+                root: null, 
+                // Define the central 'active' zone (e.g., center 5% of the viewport)
+                rootMargin: '-47.5% 0px -47.5% 0px', 
+                threshold: 0 
+            });
+
+            // Apply the observers to all cards
+            cards.forEach(card => {
+                popOutObserver.observe(card);
+                activeAndMotionObserver.observe(card);
+            });
+        });
+    </script>
     <script src="./script.js"></script>
 </body>
 </html>

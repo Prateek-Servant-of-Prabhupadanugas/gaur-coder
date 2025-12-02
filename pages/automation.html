@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>C++ Programming Course • GaurCoder</title>
+  <title>AI Automation & RPA • GaurCoder</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Learn C++ from basics to advanced with hands-on projects. Enroll now at GaurCoder." />
+  <meta name="description" content="Master AI Automation, RPA (Power Automate, n8n), and advanced workflow orchestration with hands-on projects." />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="pagestyles.css"/> 
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="pagestyles.css"/>
   <link rel="icon" href="./assets/images/gaurLogo.png" type="image/png" />
 </head>
 <!-- Google tag (gtag.js) -->
@@ -19,33 +20,32 @@
     gtag('config', 'G-YDMTM2HHTE');
     </script>
 <body>
-  <!-- Navbar -->
   <nav>
     <a href="../index.html" class="logo">GaurCoder</a>
     <div class="nav-links">
       <a href="../index.html">Home</a>
-      <a href="../#courses">Courses</a>
-      <a href="../pages/projects_new.html">Projects</a>
-      <a href="../pages/services_new.html">Services</a>
-      <a href="../pages/contact.html">Contact</a>
+      <a href="../index.html#courses">Courses</a>
+      <a href="./projects.html">Projects</a>
+      <a href="./services.html">Services</a>
+      <a href="../index.html#contacts">Contact</a>
     </div>
   </nav>
   <main class="container">
-    <h1>C++ Programming: Basic to Advanced</h1>
-    <p>Learn C++ from scratch, build real-world projects, and master advanced concepts. Live sessions, notes, recorded lessons, and hands-on capstone projects.</p>
-
-    <h2>Project Showcase</h2>
+    <h1>AI Automation & RPA Course</h1>
+    <p>Master **Robotic Process Automation (RPA)** using **Power Automate** and **n8n** for hyper-efficient business automation.</p>
+    <h2>Core Automation Capstones</h2>
     <ul>
-      <li>Expense Tracker (OOP, File I/O)</li>
-      <li>Quiz Game (Classes, STL)</li>
-      <li>Mini Compiler (Advanced)</li>
+        <li>**Power Automate RPA Bot** (Invoice Data Extraction)</li>
+        <li>**n8n Workflow** (CRM & AI Sales Orchestration)</li>
+        <li>**AI-Driven Flow** (Sentiment-Based Ticket Routing)</li>
+        <li>Web Scraping Automation (n8n/Desktop)</li>
+        <li>Custom API Integrator (n8n)</li>
     </ul>
-  <button class="cta-btn" onclick="openEnrollPopup()">Enroll for C++</button>
+  <button class="cta-btn" onclick="openEnrollPopup()">Enroll for AI Automation</button>
   </main>
-  <!-- Enroll Popup -->
   <div id="enroll-popup">
     <form id="enroll-form">
-      <h2>Enroll for C++ Course</h2>
+      <h2>Enroll for AI Automation Course</h2>
       <label>Name*<br><input name="name" required></label>
       <label>Email*<br><input name="email" type="email" required></label>
       <label>Phone<br><input name="phone"></label>
@@ -70,11 +70,44 @@
       <div id="enroll-status"></div>
     </form>
   </div>
+  <section id="curriculum">
+    <h2>Detailed Curriculum</h2>
+    <h3>Module 1: Foundations & Cloud Flows (Power Automate)</h3>
+    <ul>
+        <li>Introduction to Hyperautomation and RPA concepts.</li>
+        <li>Building basic Cloud Flows (Triggers, Actions, Connectors).</li>
+        <li>Conditional Logic and Looping in Power Automate.</li>
+        <li>Integrating SharePoint, Outlook, and Forms.</li>
+    </ul>
+
+    <h3>Module 2: Robotic Process Automation (Power Automate Desktop)</h3>
+    <ul>
+        <li>Installation and setup of Power Automate Desktop (PAD).</li>
+        <li>Creating attended and unattended UI flows.</li>
+        <li>Handling Exceptions and Error Management (try/catch).</li>
+        <li>**RPA Capstone:** Automated Invoice Data Entry. </li>
+    </ul>
+    
+    <h3>Module 3: Advanced Orchestration with n8n</h3>
+    <ul>
+        <li>Setting up n8n (Self-hosted vs. Cloud).</li>
+        <li>Nodes, Workflows, and Data Transformation (JSON/Jinja).</li>
+        <li>Using **Webhooks** and Custom APIs for integration.</li>
+        <li>Building advanced sequential and parallel workflows.</li>
+    </ul>
+    
+    <h3>Module 4: AI & Large Language Model (LLM) Integration</h3>
+    <ul>
+        <li>Connecting to OpenAI/Gemini/Azure services via n8n.</li>
+        <li>Prompt Engineering for automated content and classification.</li>
+        <li>AI Builder integration in Power Automate.</li>
+        <li>**Advanced Capstone:** Sentiment-based Workflow Routing.</li>
+    </ul>
+</section>
   <footer>
     &copy; 2025 GaurCoder • Learn Python, C++, AI & More
   </footer>
   <script>
-    // Popup logic
     function openEnrollPopup() {
       document.getElementById('enroll-popup').style.display = 'flex';
     }
@@ -83,7 +116,6 @@
       document.getElementById('enroll-status').textContent = '';
       document.getElementById('enroll-form').reset();
     }
-    // Form submission
   const scriptURL = 'https://script.google.com/macros/s/AKfycbxb0kkLbhGSibG9_gWaVF1Vffg8H7AialAYVLkQlAdvdPiie0G6VzNdZ1hQlViYHXWE/exec';
     document.getElementById('enroll-form').addEventListener('submit', function(e) {
       e.preventDefault();

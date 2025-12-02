@@ -49,6 +49,95 @@
     .nav-links a:hover {
       color: var(--accent);
     }
+    /* CSS to be added to pagestyles.css or a <style> block */
+
+  #curriculum {
+      /* Ensures the section looks good on all screens */
+      padding: 30px 0;
+      margin-top: 40px;
+  }
+
+  #curriculum h2 {
+      /* Main section title style */
+      font-size: 2.2rem;
+      color: var(--white);
+      margin-bottom: 20px;
+      border-bottom: 2px solid rgba(108, 43, 217, 0.2); /* Light purple underline */
+      padding-bottom: 10px;
+  }
+
+  #curriculum h3 {
+      /* Module Title Style */
+      font-size: 1.5rem;
+      color: var(--gold); /* Highlight module names */
+      margin-top: 30px;
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      background: var(--glass); /* Subtle background for module title */
+      border-radius: 8px;
+      display: inline-block; /* Makes background only cover the text width */
+  }
+
+  #curriculum ul {
+      /* List styles for content points */
+      list-style: none; /* Remove default bullets */
+      padding-left: 0;
+      margin-top: 10px;
+  }
+
+  #curriculum ul li {
+      /* Individual list item style */
+      color: var(--muted);
+      font-size: 1.05rem;
+      padding: 10px 15px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.02); /* Very subtle item background */
+      border-radius: 6px;
+      border-left: 4px solid var(--purple); /* Distinguishing vertical line */
+      transition: background 0.2s;
+  }
+
+  #curriculum ul li:hover {
+      background: rgba(108, 43, 217, 0.05); /* Slight hover effect */
+      color: var(--white);
+  }
+
+  #curriculum ul li strong {
+      /* Emphasis for key technologies */
+      color: var(--white);
+  }
+  /* --- Mobile View Adjustments (For screens 768px wide or less) --- */
+    @media (max-width: 768px) {
+        
+        #curriculum {
+            /* Reduce padding slightly on smaller screens */
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        #curriculum h2 {
+            /* Reduce main heading font size */
+            font-size: 1.8rem;
+        }
+
+        #curriculum h3 {
+            /* Reduce module title font size */
+            font-size: 1.3rem;
+            /* Make the background fill the full width for better flow */
+            display: block; 
+            padding: 10px 15px;
+            text-align: center; /* Center the module title */
+            border-radius: 0; /* Optional: remove corner radius */
+        }
+
+        #curriculum ul li {
+            /* Reduce list item font size and padding */
+            font-size: 1rem;
+            padding: 8px 12px;
+            /* Keep the border line, but ensure full width */
+            margin-bottom: 6px;
+        }
+      } 
     .cta-btn {
       background: var(--primary);
       color: #fff;

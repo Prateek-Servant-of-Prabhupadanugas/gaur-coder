@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll-Activated Center Carousel (Horizontal Oscillation)</title>
+    
+    <style>
+        /* --- Setup and Variables --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        :root {
+            /* Define the core card dimensions */
+            --card-size: 200px; 
+            --overlap-amount: 40px; 
+            
+            /* CALCULATIONS: */
+            --card-scroll-step: calc(var(--card-size) - var(--overlap-amount)); 
+            --total-cards: 6; 
+            --scroll-height: calc(var(--card-scroll-step) * (var(--total-cards) - 1));
+
+            /* New Variable for Oscillation Distance */
+            --horizontal-offset: 150px; 
+        }
+
+        /* --- Placeholder Scroll Space --- */
+        .top-placeholder {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: #666;
+            text-align: center;
+        }
+
+        /* --- Scroll Container (The Driver) --- */
+        .scroll-carousel-container {
+            /* Height calculation remains the same */
+            height: calc(var(--scroll-height) + 100vh + 50vh); 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            padding-top: 50vh; 
+            overflow-x: hidden; /* Prevent horizontal scrollbar during animation */
+        }
+
+        /* --- Carousel Track (The Fixed Positioner) --- */
+        .carousel-track {
+            position: sticky;
+            top: 50%;
+            transform: translateY(-50%); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: calc(var(--overlap-amount) * -1); 
+            padding: 0;
+            margin: 0;
+        }
+
+        /* --- Card Styles (The Base) --- */
+        .carousel-card {
+            --card-size-active: 280px; 
+            width: var(--card-size);
+            height: var(--card-size);
+            background-color: #ffffff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            padding: 15px;
+            box-sizing: border-box;
+            cursor: pointer;
+            
+            /* 1. INITIAL STATE: Invisible, small, and pushed left by default */
+            opacity: 0;
+            transform: scale(0.5) translateX(calc(-1 * var(--horizontal-offset))); 
+            
+            /* Animation transition settings */
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        opacity 0.4s ease-out, 
+                        box-shadow 0.3s ease,
+                        width 0.4s, height 0.4s;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            will-change: transform, opacity; /* Optimization for smooth animation */
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* ... (Card content styles like img, h3, p, a remain the same) ... */
+
+        /* --- Active/Center Card States (Controlled by JS) --- */
+
+        /* State when the card comes into view (Pop Out) */
+        .carousel-card.in-view {
+            opacity: 1;
+            /* In-view state is centered (no X translation) and full scale */
+            transform: scale(1) translateX(0); 
+        }
+
+        /* State when the card is the active/center card (Biggest Size) */
+        .carousel-card.active {
+            width: var(--card-size-active);
+            height: var(--card-size-active);
+            z-index: 10;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            background-color: #e6f2ff;
+            /* No X translation needed here, as it's already centered by .in-view */
+        }
+
+        /* 2. Horizontal Oscillation Classes (Applied by JS) */
+
+        /* State for cards BELOW the center (move right) */
+        .carousel-card.move-right {
+            /* Pushes the card to the right */
+            transform: scale(1) translateX(var(--horizontal-offset)); 
+            opacity: 0.5;
+        }
+
+        /* State for cards ABOVE the center (move left - which is the default, but we ensure it) */
+        .carousel-card.move-left {
+            /* Pushes the card to the left */
+            transform: scale(1) translateX(calc(-1 * var(--horizontal-offset)));
+            opacity: 0.5;
+        }
+
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 600px) {
+            :root {
+                --card-size: 150px; 
+                --overlap-amount: 30px;
+                --horizontal-offset: 80px; /* Reduced offset for mobile */
+            }
+            /* ... (Other mobile styles remain the same) ... */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-placeholder">
+        <h1>Scroll Down to Activate the Carousel! 👇</h1>
+    </div>
+
+    <section class="scroll-carousel-container">
+        <div class="carousel-track">
+            <div class="carousel-card" id="card-1">
+                <div class="card-content">
+                    <img src="https://via.placeholder.com/200x200?text=Card+1" alt="Design Principles">
+                    <h3>Design Principles</h3>
+                    <p>Focus on user experience and accessibility first.</p>
+                    <a href="#" class="card-link">Explore Details</a>
+                </div>
+            </div>
+            <div class="carousel-card" id="card-2">
+                <div class="card-content">
+                    <img src="https://via.placeholder.com/200x200?text=Card+2" alt="Frontend Stacks">
+                    <h3>Frontend Stacks</h3>
+                    <p>Modern frameworks offer powerful state management.</p>
+                    <a href="#" class="card-link">View Projects</a>
+                </div>
+            </div>
+            <div class="carousel-card" id="card-3">
+                <div class="card-content">
+                    <img src="https://via.placeholder.com/200x200?text=Card+3" alt="Backend Scalability">
+                    <h3>Backend Scalability</h3>
+                    <p>Choosing the right database for your traffic needs.</p>
+                    <a href="#" class="card-link">Read Guide</a>
+                </div>
+            </div>
+            <div class="carousel-card" id="card-4">
+                <div class="card-content">
+                    <img src="https://via.placeholder.com/200x200?text=Card+4" alt="SEO Optimization">
+                    <h3>SEO Optimization</h3>
+                    <p>Technical SEO is crucial for organic reach growth.</p>
+                    <a href="#" class="card-link">Get Tips</a>
+                </div>
+            </div>
+            <div class="carousel-card" id="card-5">
+                <div class="card-content">
+                    <img src="https://via.placeholder.com/200x200?text=Card+5" alt="Wireframing">
+                    <h3>Wireframing Process</h3>
+                    <p>Sketching user flows before diving into code.</p>
+                    <a href="#" class="card-link">Start Sketching</a>
+                </div>
+            </div>
+            <div class="carousel-card" id="card-6">
+                <div class="card-content">
+                    <img src="https://via.placeholder.com/200x200?text=Card+6" alt="Component Libraries">
+                    <h3>Component Libraries</h3>
+                    <p>Building reusable UI elements for speed.</p>
+                    <a href="#" class="card-link">Explore UI Kits</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div style="height: 100vh; display: flex; align-items: center; justify-content: center; color: #666;">
+        End of Scroll Section. Scroll up to see the cards pop in! ⬆️
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.carousel-card');
+
+            // --- Observer for 'in-view' (Pop Out/In) ---
+            const popOutObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        // When leaving the screen, remove 'in-view'
+                        entry.target.classList.remove('in-view');
+                        // And also remove the motion classes to reset for the next time it appears
+                        entry.target.classList.remove('move-right', 'move-left');
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, {
+                root: null, 
+                threshold: 0.05 // Lower threshold for earlier pop-out
+            });
+
+            // --- Observer for 'active' and Horizontal Motion ---
+            const activeAndMotionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const card = entry.target;
+                    
+                    // The IntersectionRect is the part of the card visible in the viewport.
+                    const boundingClientRect = card.getBoundingClientRect();
+                    const viewportCenterY = window.innerHeight / 2;
+
+                    // 1. Center/Active check (Same as before)
+                    if (entry.isIntersecting) {
+                        // isIntersecting is true within the central 5%
+                        card.classList.add('active');
+                        card.classList.remove('move-right', 'move-left'); // Ensure center card is horizontal
+                    } else {
+                        card.classList.remove('active');
+
+                        // 2. Horizontal Motion Check (Only if the card is in view, but not active)
+                        // If the card is above the center line
+                        if (boundingClientRect.bottom < viewportCenterY) {
+                            card.classList.add('move-left');
+                            card.classList.remove('move-right');
+                        } 
+                        // If the card is below the center line
+                        else if (boundingClientRect.top > viewportCenterY) {
+                            card.classList.add('move-right');
+                            card.classList.remove('move-left');
+                        }
+                    }
+                });
+            }, {
+                root: null, 
+                // Define the central 'active' zone (e.g., center 5% of the viewport)
+                rootMargin: '-47.5% 0px -47.5% 0px', 
+                threshold: 0 
+            });
+
+            // Apply the observers to all cards
+            cards.forEach(card => {
+                popOutObserver.observe(card);
+                activeAndMotionObserver.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
