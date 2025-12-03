@@ -250,7 +250,8 @@
             justify-content: center;
             padding: 60px 0; /* More vertical space */
             background: none;
-            background: radial-gradient(circle at 40% 50%, #6C2BD9 0%, #99b5f5 100%);
+            background: linear-gradient(0deg, blue, purple);
+
         }
         .cube-wrap:focus {
             outline: none;
@@ -458,177 +459,108 @@
             box-shadow: 0 10px 40px rgba(108, 43, 217, 0.18);
         }
 
-        :root {
-            /* Define the core card dimensions */
-            --card-size: 200px; 
-            --overlap-amount: 40px; 
-            
-            /* CALCULATIONS: */
-            --card-scroll-step: calc(var(--card-size) - var(--overlap-amount)); 
-            --total-cards: 6; 
-            --scroll-height: calc(var(--card-scroll-step) * (var(--total-cards) - 1));
+        /* --- EXISTING CSS ROOT AND CONTAINER STYLES --- */
+:root {
+    /* Define the core card dimensions */
+    --card-size: 200px; 
+    --overlap-amount: 40px; 
+    
+    /* CALCULATIONS: */
+    --card-scroll-step: calc(var(--card-size) - var(--overlap-amount)); 
+    --total-cards: 6; 
+    --scroll-height: calc(var(--card-scroll-step) * (var(--total-cards) - 1));
 
-            /* New Variable for Oscillation Distance */
-            --horizontal-offset: 150px; 
-        }
+    /* New Variable for Oscillation Distance */
+    --horizontal-offset: 150px; 
+}
 
-        /* --- Placeholder Scroll Space --- */
-        .top-placeholder {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            color: #666;
-            text-align: center;
-        }
+/* ... (Top placeholder and sv-scroll-carousel-container remains the same) ... */
+/* Services Container  */
+#services {
+    background: linear-gradient(0deg , #0b1b3f  , blue);
+    padding: 80px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* --- Carousel Track (The Fixed Positioner) --- */
+.sv-carousel-track {
+    position: sticky;
+    top: 50%;
+    transform: translateY(-11%); 
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+    align-items: center;
+    gap: calc(var(--overlap-amount) * -1); 
+    padding: 0;
+    margin: 0;
+    width : 100%;
+    /* Add this line: */
+    will-change: transform; 
+}
+ @media (max-width: 750px){
+     .sv-carousel-track {
+         width : 90% ; 
+     }
+ }
 
-        /* --- Scroll Container (The Driver) --- */
-        .sv-scroll-carousel-container {
-            /* Height calculation remains the same */
-            height: calc(var(--scroll-height) + 85vh + 50vh); 
-            display: flex;
-            
-            justify-content: center;
-            align-items: flex-start; 
-            padding-top: 50vh; 
-            margin : 0 ; 
-            overflow: hidden; /* Prevent horizontal scrollbar during animation */
-        }
-
-        /* --- Carousel Track (The Fixed Positioner) --- */
-        .sv-carousel-track {
-            position: sticky;
-            top: 50%;
-            transform: translateY(-11%); 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: calc(var(--overlap-amount) * -1); 
-            padding: 0;
-            margin: 0;
-            width : 50%;
-        }
-         @media (max-width: 750px){
-            .sv-carousel-track {
-                width : 90% ; 
-            }
-         }
-
-        /* --- Card Styles (The Base) --- */
-        .sv-image {
-            width : 80% ; 
-            height : 65% ; 
-            border-radius: 40%;
-            
-        }
-        .sv-carousel-card {
-            --card-size-active: 280px; 
-            width: var(--card-size);
-            height: var(--card-size);
-            color:black;
-            background-color: #ffffff;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            border-radius: 12px;
-            padding: 15px;
-            box-sizing: border-box;
-            cursor: pointer;
-            
-            /* 1. INITIAL STATE: Invisible, small, and pushed left by default */
-            opacity: 0;
-            transform: scale(0.5) translateX(calc(-1 * var(--horizontal-offset))); 
-            
-            /* Animation transition settings */
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                        opacity 0.4s ease-out, 
-                        box-shadow 0.3s ease,
-                        width 0.4s, height 0.4s;
-            
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            overflow: hidden;
-            will-change: transform, opacity; /* Optimization for smooth animation */
-        }
-
-        .sv-card-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        /* ... (Card content styles like img, h3, p, a remain the same) ... */
-
-        /* --- Active/Center Card States (Controlled by JS) --- */
-
-        /* State when the card comes into view (Pop Out) */
-        .sv-carousel-card.sv-in-view {
-            opacity: 1;
-             
-            /* In-view state is centered (no X translation) and full scale */
-            transform: scale(1) translateX(0); 
-        }
-
-        /* State when the card is the active/center card (Biggest Size) */
-        .sv-carousel-card.sv-active {
-            width: 100%;
-            height: auto;
-            z-index: 10;
-         
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-            background-color: #e6f2ff;
-            /* No X translation needed here, as it's already centered by .in-view */
-        }
-
-        .sv-card-link {
-            background-color :#3b0ddb ; 
-            font-size : small; 
-            padding : 5px 7px ; 
-            color :#fff; 
-            border-radius : 8px ;
-
-        }
-        .sv-active .sv-card-link {
-            font-size :medium ; 
-            padding : 10px 14px ;
-        }
-        .sv-in-view .sv-card-content h3 {
-            font-size : small ; 
-            margin : 0 ; 
-        }
-        .sv-active .sv-card-content h3 {
-            font-size :large;
-            margin : 0 ; 
-        }
-
-        /* 2. Horizontal Oscillation Classes (Applied by JS) */
-
-        /* State for cards BELOW the center (move right) */
-        .sv-carousel-card.sv-move-right {
-            /* Pushes the card to the right */
-            transform: scale(1) translateX(var(--horizontal-offset)); 
-            opacity: 0.5;
-        }
-
-        /* State for cards ABOVE the center (move left - which is the default, but we ensure it) */
-        .sv-carousel-card.sv-move-left {
-            /* Pushes the card to the left */
-            transform: scale(1) translateX(calc(-1 * var(--horizontal-offset)));
-            opacity: 0.5;
-        }
+/* --- Card Styles (The Base) --- */
+/* Remove transform: scale(0.5) translateX(...) from here. 
+   We keep the default state small/invisible, but centered. */
+.sv-carousel-card {
+    --card-size-active: 280px; 
+    width: var(--card-size);
+    height: var(--card-size);
+    color:black;
+    background-color: #ffffff;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+    
+    /* 1. INITIAL STATE: Invisible, small, and CENTERED */
+    opacity: 0;
+    transform: scale(0.5); /* Only scale is needed here */
+    
+    /* Transition is now for smooth scaling/opacity change */
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                opacity 0.4s ease-out, 
+                box-shadow 0.3s ease,
+                width 0.4s, height 0.4s; 
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    will-change: transform, opacity; /* Optimization */
+}
 
 
-        /* --- Mobile Responsiveness --- */
-        @media (max-width: 600px) {
-            :root {
-                --card-size: 150px; 
-                --overlap-amount: 30px;
-                --horizontal-offset: 80px; /* Reduced offset for mobile */
-            }
-            /* ... (Other mobile styles remain the same) ... */
-        }
+/* --- Active/Center Card States (Controlled by JS) --- */
+
+/* State when the card comes into view (Pop Out) */
+.sv-carousel-card.sv-in-view {
+    opacity: 1;
+    /* This sets the card to its default scale and removes initial X translation */
+    transform: scale(1); 
+    /* The active class will now handle the size/z-index. */
+}
+
+/* State when the card is the active/center card (Biggest Size) */
+.sv-carousel-card.sv-active {
+    width: 100% ; 
+    height: auto;
+    z-index: 10;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    background-color: #e6f2ff;
+    /* NO TRANSFORMS HERE. JS will handle it. */
+}
+
+/* REMOVE sv-move-right and sv-move-left CSS definitions completely. 
+   The continuous transformation is now handled by JS using the style attribute. */
     </style>
     
 </head>
