@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Marketing Solutions | GaurCoder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS is included here for simplicity */
+        :root {
+            --dark-blue: #0B1B3F;
+            --deep-dark: #041028;
+            --gold: #F2C14E;
+            --white: #EEF2FF;
+            --bg-gradient: linear-gradient(180deg, var(--deep-dark) 0%, var(--dark-blue) 60%);
+            --glass: rgba(255, 255, 255, 0.04);
+            --cta-gradient: linear-gradient(90deg, #F2C14E, #d8a73b);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--white);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Utility & Components --- */
+        .cta-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: var(--cta-gradient);
+            color: var(--dark-blue);
+            font-weight: 800;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 rgba(242, 193, 78, 0.2);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(242, 193, 78, 0.3);
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 0;
+            text-align: center;
+        }
+        header .logo {
+            font-size: 1.8em;
+            color: var(--gold);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        /* --- Services Section --- */
+        .services {
+            padding: 60px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--glass);
+        }
+
+        .services h2 {
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--dark-blue);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--glass);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            color: var(--gold);
+            font-size: 1.4em;
+            margin-top: 0;
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        /* --- Modal Styling --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none; /* Controlled by JS */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--dark-blue);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--gold);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: var(--white);
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--gold);
+        }
+
+        .modal-content h3 {
+            color: var(--gold);
+            margin-top: 0;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--deep-dark);
+            color: var(--white);
+            font-size: 1em;
+            resize: vertical;
+        }
+        
+        form button[type="submit"] {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        #form-status {
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+        
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .hero {
+                padding: 80px 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">GaurCoder Digital Marketing</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Maximize Your ROI with Data-Driven Digital Marketing</h1>
+                <p>We craft tailored digital strategies across all channels—from search to social—to increase your visibility, drive high-quality leads, and achieve measurable business growth.</p>
+                <button class="cta-btn" id="openModalBtn">Request a FREE Digital Strategy Audit</button>
+            </div>
+        </section>
+
+        <section class="services">
+            <div class="container">
+                <h2>📈 Our Core Digital Marketing Solutions</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>Search Engine Optimization (SEO)</h3>
+                        <p>Improve organic rankings, increase website traffic, and establish long-term authority in your niche through technical, on-page, and off-page SEO.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Pay-Per-Click (PPC) Advertising</h3>
+                        <p>Manage and optimize campaigns across Google Ads, Bing, and display networks to ensure high conversion rates and the lowest cost-per-acquisition (CPA).</p>
+                    </div>
+                    <div class="card">
+                        <h3>Social Media Marketing (SMM)</h3>
+                        <p>Develop engaging content and run targeted ad campaigns on platforms like Facebook, Instagram, and LinkedIn to build brand awareness and loyalty.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Content Strategy & Creation</h3>
+                        <p>Plan, write, and distribute high-value content (blogs, whitepapers, video scripts) that attracts your ideal customer and guides them through the sales funnel.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Email Marketing & Automation</h3>
+                        <p>Design personalized email sequences for lead nurturing, retention, and sales, using advanced segmentation and automation tools.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Advanced Analytics & Reporting</h3>
+                        <p>Set up comprehensive tracking (GA4, Tag Manager) and provide clear, actionable reports to continually refine and optimize marketing spend.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Stop Guessing. Start Growing.</h2>
+                <button class="cta-btn" id="openModalBtn2">Get Your Free Strategy Audit Now</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="text-align:center; padding: 20px 0; color: rgba(255, 255, 255, 0.5);">
+            &copy; 2025 GaurCoder. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- The Modal/Popup Form -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Request Your Free Digital Strategy Audit</h3>
+            <p style="color:rgba(255, 255, 255, 0.8);">Tell us about your current marketing challenges and goals. We'll analyze your current strategy and outline a path to growth.</p>
+            
+            <form id="auditForm">
+                <label for="name">Your Name*</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="phone">Phone Number*</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="business">Brief Description of Your Marketing Goals/Challenges</label>
+                <textarea id="business" name="business" rows="3" placeholder="e.g., 'We need to increase lead volume by 30% from organic search within six months.'"></textarea>
+
+                <button type="submit" class="cta-btn">Submit Request for Audit</button>
+            </form>
+            <div id="form-status"></div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for Modal Control and Form Submission
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('contactModal');
+            const openBtns = document.querySelectorAll('#openModalBtn, #openModalBtn2');
+            const closeBtn = document.querySelector('.close-btn');
+            const form = document.getElementById('auditForm');
+            const formStatus = document.getElementById('form-status');
+
+            // Function to open the modal
+            const openModal = () => {
+                modal.style.display = 'flex';
+            };
+
+            // Function to close the modal
+            const closeModal = () => {
+                modal.style.display = 'none';
+            };
+
+            // Event listeners to open the modal
+            openBtns.forEach(btn => {
+                btn.addEventListener('click', openModal);
+            });
+
+            // Event listener to close the modal
+            closeBtn.addEventListener('click', closeModal);
+
+            // Close modal when clicking outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Handle form submission
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const formData = {
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    business: document.getElementById('business').value
+                };
+
+                // --- SIMULATED DATA HANDLING ---
+                // In a real application, this data would be sent to a backend service 
+                // to save to a database or spreadsheet (like the Excel connection mentioned).
+                
+                console.log('Digital Marketing Request Captured:', formData);
+                
+                // Show submission progress
+                formStatus.textContent = 'Request submitted! Analyzing marketing goals...';
+
+                setTimeout(() => {
+                    // Success State
+                    formStatus.textContent = '✅ Success! We received your request. We will contact you soon to schedule your strategy audit.';
+                    form.reset(); // Clear the form
+                    
+                    // Optional: Auto-close modal after a delay
+                    setTimeout(closeModal, 3000); 
+                }, 2000); 
+            });
+        });
+    </script>
+</body>
+</html>

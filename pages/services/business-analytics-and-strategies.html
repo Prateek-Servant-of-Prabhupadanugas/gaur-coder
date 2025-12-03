@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Analytics & Strategy | GaurCoder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS is included here for simplicity */
+        :root {
+            --dark-blue: #0B1B3F;
+            --deep-dark: #041028;
+            --gold: #F2C14E;
+            --white: #EEF2FF;
+            --bg-gradient: linear-gradient(180deg, var(--deep-dark) 0%, var(--dark-blue) 60%);
+            --glass: rgba(255, 255, 255, 0.04);
+            --cta-gradient: linear-gradient(90deg, #F2C14E, #d8a73b);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--white);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Utility & Components --- */
+        .cta-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: var(--cta-gradient);
+            color: var(--dark-blue);
+            font-weight: 800;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 rgba(242, 193, 78, 0.2);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(242, 193, 78, 0.3);
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 0;
+            text-align: center;
+        }
+        header .logo {
+            font-size: 1.8em;
+            color: var(--gold);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        /* --- Services Section --- */
+        .services {
+            padding: 60px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--glass);
+        }
+
+        .services h2 {
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--dark-blue);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--glass);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            color: var(--gold);
+            font-size: 1.4em;
+            margin-top: 0;
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        /* --- Modal Styling --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none; /* Controlled by JS */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--dark-blue);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--gold);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: var(--white);
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--gold);
+        }
+
+        .modal-content h3 {
+            color: var(--gold);
+            margin-top: 0;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--deep-dark);
+            color: var(--white);
+            font-size: 1em;
+            resize: vertical;
+        }
+        
+        form button[type="submit"] {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        #form-status {
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+        
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .hero {
+                padding: 80px 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">GaurCoder Analytics</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Turn Raw Data into Competitive Strategy</h1>
+                <p>We help businesses leverage data to optimize operations, predict market trends, and make smarter, profitable decisions through advanced analytics and strategic consulting.</p>
+                <button class="cta-btn" id="openModalBtn">Request a FREE Data Strategy Audit</button>
+            </div>
+        </section>
+
+        <section class="services">
+            <div class="container">
+                <h2>📊 Our Analytics & Strategy Solutions</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>Custom Dashboards (Power BI/Tableau)</h3>
+                        <p>Visualize your KPIs in real-time. We build interactive dashboards that connect to your data sources, giving you a 360-degree view of your business health.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Predictive Analytics & Forecasting</h3>
+                        <p>Stop reacting and start preparing. We use historical data and machine learning models to forecast sales, inventory needs, and market trends.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Business Process Optimization</h3>
+                        <p>We analyze your operational workflows to identify bottlenecks and inefficiencies, recommending data-backed strategies to reduce costs and save time.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Customer Segmentation Analysis</h3>
+                        <p>Understand who your best customers are. We cluster your audience by behavior and value to help you tailor marketing and improve retention.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Market Research & Intelligence</h3>
+                        <p>Deep-dive analysis into competitors, pricing strategies, and industry shifts to help you identify blue-ocean opportunities.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Data Infrastructure Setup</h3>
+                        <p>From setting up data warehouses to cleaning messy spreadsheets, we ensure your data foundation is robust, secure, and ready for analysis.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Make Smarter Decisions?</h2>
+                <button class="cta-btn" id="openModalBtn2">Start Your Analytics Transformation</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="text-align:center; padding: 20px 0; color: rgba(255, 255, 255, 0.5);">
+            &copy; 2025 GaurCoder. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- The Modal/Popup Form -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Request Your Free Data Strategy Audit</h3>
+            <p style="color:rgba(255, 255, 255, 0.8);">Tell us about your current data challenges. Do you have messy data? Need a dashboard? We'll help you find the way forward.</p>
+            
+            <form id="auditForm">
+                <label for="name">Your Name*</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="phone">Phone Number*</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="business">What is your biggest data challenge?</label>
+                <textarea id="business" name="business" rows="3" placeholder="e.g., 'We have sales data in Excel but don't know which products are actually most profitable.'"></textarea>
+
+                <button type="submit" class="cta-btn">Submit Request</button>
+            </form>
+            <div id="form-status"></div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for Modal Control and Form Submission
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('contactModal');
+            const openBtns = document.querySelectorAll('#openModalBtn, #openModalBtn2');
+            const closeBtn = document.querySelector('.close-btn');
+            const form = document.getElementById('auditForm');
+            const formStatus = document.getElementById('form-status');
+
+            // Function to open the modal
+            const openModal = () => {
+                modal.style.display = 'flex';
+            };
+
+            // Function to close the modal
+            const closeModal = () => {
+                modal.style.display = 'none';
+            };
+
+            // Event listeners to open the modal
+            openBtns.forEach(btn => {
+                btn.addEventListener('click', openModal);
+            });
+
+            // Event listener to close the modal
+            closeBtn.addEventListener('click', closeModal);
+
+            // Close modal when clicking outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Handle form submission
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const formData = {
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    business: document.getElementById('business').value
+                };
+
+                // --- SIMULATED DATA HANDLING ---
+                // In a real application, this data would be sent to a backend service 
+                // to save to a database or spreadsheet (like the Excel connection mentioned).
+                
+                console.log('Analytics Audit Request Captured:', formData);
+                
+                // Show submission progress
+                formStatus.textContent = 'Request submitted! Connecting to analytics team...';
+
+                setTimeout(() => {
+                    // Success State
+                    formStatus.textContent = '✅ Success! We received your request. We will contact you soon to schedule your data audit.';
+                    form.reset(); // Clear the form
+                    
+                    // Optional: Auto-close modal after a delay
+                    setTimeout(closeModal, 3000); 
+                }, 2000); 
+            });
+        });
+    </script>
+</body>
+</html>
