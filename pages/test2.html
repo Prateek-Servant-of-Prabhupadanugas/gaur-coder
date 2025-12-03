@@ -3,375 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scroll-Driven Services Carousel</title>
+    <title>Sticky Scroll Background Effect</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* BASE STYLES & SETUP */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light background */
+            background-color: #f0f4f8;
             margin: 0;
             padding: 0;
         }
 
-        /* --- CSS VARIABLES --- */
-        :root {
-            /* Define the core card dimensions */
-            --card-size: 200px; 
-            --overlap-amount: 40px; 
-            
-            /* CALCULATIONS: */
-            --card-scroll-step: calc(var(--card-size) - var(--overlap-amount)); 
-            --total-cards: 6; 
-            
-            /* New Variable for Oscillation Distance */
-            --horizontal-offset: 150px; 
-            
-            /* Calculate total scroll height dynamically in JS for simplicity, 
-               but keep the old calculation structure for reference: */
-            --scroll-height: calc(var(--card-scroll-step) * (var(--total-cards) - 1));
+        /* --- Section 1: Placeholder/Content Before --- */
+        .section-1 {
+            height: 100vh;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            text-align: center;
+            position: relative;
         }
-        
-        /* The container driving the scroll effect */
-        .sv-scroll-carousel-container {
-            /* FIX 1: Increase height and padding to prevent overlap with previous section (pushes content down 100vh) */
-            /* Total height = Scroll Height + (100vh Top Buffer) + (50vh Bottom Buffer) */
-            height: calc(var(--scroll-height) + 150vh); 
+
+        /* --- Sticky Container (The Parent) --- */
+        .sticky-container {
+            /* This height defines how long the background remains "sticky" */
+            /* 100vh (Section 2 height) + 100vh (Section 3 scroll distance) = 200vh */
+            height: 200vh; 
+            background-color: #1a1a2e; /* Base background color for the sticky zone */
+        }
+
+        /* --- Section 2: The Background/3D Element --- */
+        .section-2-background {
+            position: sticky;
+            top: 0; /* Makes the element stick to the top of the viewport */
+            height: 100vh; /* It occupies one full viewport height when sticky */
             display: flex;
             justify-content: center;
-            align-items: flex-start; 
-            padding-top: 100vh; /* Pushes content down to prevent overlap */
-            padding-bottom: 50vh; /* Ensures the last card scrolls out of view */
-            margin : 0 ; 
-            overflow-x: hidden; /* Prevent horizontal scrollbar during animation */
-            position: relative; /* Needed for child absolute positioning if required */
-        }
-        
-        /* Top Scroll Indicator/Title */
-        .sv-title-section {
-            position: absolute;
-            top: 50vh; /* Position it visibly in the center of the pre-scroll area */
-            width: 100%;
-            text-align: center;
-        }
-        .sv-title-section h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #3b0ddb;
-            animation: bounce 2s infinite;
-        }
-
-        /* --- Carousel Track (The Fixed Positioner) --- */
-        .sv-carousel-track {
-            position: sticky;
-            top: 50%;
-            /* FIX 2: Center the entire track vertically relative to the viewport */
-            transform: translateY(-50%); 
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: calc(var(--overlap-amount) * -1); 
-            padding: 0;
-            margin: 0;
-            width : 50%;
-            will-change: transform; 
-        }
-        @media (max-width: 750px){
-            .sv-carousel-track {
-                width : 90% ; 
-            }
+            color: white;
+            font-size: 3rem;
+            /* Placeholder for your 3D effect/custom background */
+            background: radial-gradient(circle at 70% 30%, #4a00e0, #8e2de2);
+            transition: opacity 0.3s ease;
+            z-index: 1; /* Ensure it stays behind the scrolling content */
         }
 
-        /* --- Card Styles (The Base) --- */
-        .sv-image {
-            width : 80% ; 
-            height : 65% ; 
-            object-fit: cover;
-            border-radius: 40%;
-            transition: border-radius 0.4s ease;
-        }
-        .sv-carousel-card {
-            width: var(--card-size);
-            height: var(--card-size);
-            color: #1f2937; /* Dark text */
-            background-color: #ffffff;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            border-radius: 12px;
-            padding: 15px;
-            box-sizing: border-box;
-            cursor: pointer;
-            border: 2px solid transparent;
-            
-            /* 1. INITIAL STATE: Invisible, small, and CENTERED */
-            opacity: 0;
-            transform: scale(0.5); 
-            
-            /* Transitions for size, opacity, and box-shadow only. Transform is JS-controlled. */
-            transition: opacity 0.4s ease-out, 
-                        box-shadow 0.3s ease,
-                        width 0.4s, height 0.4s,
-                        border-color 0.4s ease;
-            
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            overflow: hidden;
-            will-change: transform, opacity; 
-        }
-        
-        /* State when the card comes into view (Pop Out) */
-        .sv-carousel-card.sv-in-view {
-            opacity: 1;
-            /* Scale is now controlled in JS to allow for combined transform */
-            transform: scale(1); 
-        }
-
-        /* State when the card is the active/center card (Biggest Size) */
-        .sv-carousel-card.sv-active {
-            width: 100%;
-            height: auto;
+        /* --- Section 3: The Content that Scrolls Over Section 2 --- */
+        .section-3-content {
+            /* Pushes the content down so it starts appearing once Section 2 is sticky */
+            padding-top: 100vh; 
+            background-color: transparent; /* Must be transparent so Section 2 is visible */
             z-index: 10;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-            background-color: #e6f2ff;
-            border-color: #3b0ddb;
+            position: relative; /* Ensure it stays above the sticky background */
         }
         
-        .sv-active .sv-image {
+        .content-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 600px;
             border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        /* Card Content Styles */
-        .sv-card-content {
+        /* --- Section 4: Content After the Sticky Effect Ends --- */
+        .section-4 {
+            height: 100vh;
+            background-color: #34495e;
+            color: white;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            width: 100%;
-            gap: 5px;
+            font-size: 2rem;
+            text-align: center;
+            transition: background-color 0.5s;
         }
-        .sv-card-content h3 {
-            font-weight: 600;
-            color: #3b0ddb;
-            transition: font-size 0.4s;
-        }
-        .sv-card-content p {
-            color: #4b5563;
-        }
-
-        .sv-card-link {
-            background-color :#3b0ddb ; 
-            font-size : small; 
-            padding : 5px 7px ; 
-            color :#fff; 
-            border-radius : 8px ;
-            text-decoration: none;
-            transition: padding 0.4s, font-size 0.4s;
-        }
-        .sv-active .sv-card-link {
-            font-size :medium ; 
-            padding : 10px 14px ;
-        }
-        .sv-in-view .sv-card-content h3 {
-            font-size : 1rem ; 
-            margin : 0 ; 
-        }
-        .sv-active .sv-card-content h3 {
-            font-size : 1.5rem;
-            margin : 0 ; 
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 600px) {
-            :root {
-                --card-size: 150px; 
-                --overlap-amount: 30px;
-                --horizontal-offset: 80px; 
-            }
-            .sv-scroll-carousel-container {
-                height: calc(var(--scroll-height) + 150vh); 
-            }
-            .sv-card-link {
-                padding : 4px 6px ; 
-            }
-            .sv-active .sv-card-link {
-                padding : 8px 12px ;
-            }
+        
+        /* --- Section 5: New Section Added --- */
+        .section-5 {
+            height: 100vh;
+            background-color: #27ae60; /* Green color */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            text-align: center;
+            transition: background-color 0.5s;
         }
     </style>
 </head>
 <body>
 
-<!-- Placeholder content to force initial scroll -->
-<div class="h-[100vh] bg-gray-100 flex items-center justify-center text-3xl text-gray-700 shadow-inner">
-    Your Previous Section Content (Scroll Down)
-</div>
+    <!-- SECTION 1: Standard Content -->
+    <section class="section-1">
+        <h2>Section 1: Initial Content</h2>
+        <p class="absolute bottom-5 text-xl opacity-80">Scroll down to see Section 2 stick!</p>
+    </section>
 
-<!-- Services Scroll Carousel Section -->
-<section id="services" class="sv-scroll-carousel-container">
-    
-    <!-- FIX: Move H2 outside of the sticky track for proper vertical centering and to prevent overlap -->
-    <div class="sv-title-section">
-        <h2>Scroll Down to Explore Services</h2>
-    </div>
-
-    <div class="sv-carousel-track">
-        <!-- Removed the redundant <section> wrapper for the H2 -->
-
-        <div class="sv-carousel-card" id="card-1">
-            <div class="sv-card-content">
-                <img src="https://placehold.co/200x130/3b0ddb/ffffff?text=AI+Automation" alt="Automation Designing for Businesses" class="sv-image">
-                <h3>Automation Designing For Businesses</h3>
-                <p>Automate Posts, Content Creation, Complaint Chatbot</p>
-                <a href="./pages/services/automate-businesses.html" class="sv-card-link">Explore Details</a>
-            </div>
-        </div>
-        <div class="sv-carousel-card" id="card-2">
-            <div class="sv-card-content">
-                <img src="https://placehold.co/200x130/3b0ddb/ffffff?text=Web+App+Build" alt="Build Website / WebApp" class="sv-image">
-                <h3>Build Website / WebApp</h3>
-                <p>Build a Professional Website for Business / Personal Portfolio </p>
-                <a href="./pages/services/web-services.html" class="sv-card-link">Explore Details </a>
-            </div>
-        </div>
-        <div class="sv-carousel-card" id="card-3">
-            <div class="sv-card-content">
-                <img class="sv-image" src="https://placehold.co/200x130/3b0ddb/ffffff?text=Mobile+App" alt="Build Mobile Application">
-                <h3>Build Mobile Application</h3>
-                <p>Build a Professional Android Application</p>
-                <a href="./pages/services/mobile-application.html" class="sv-card-link">Explore Details</a>
-            </div>
-        </div>
-        <div class="sv-carousel-card" id="card-4">
-            <div class="sv-card-content">
-                <img class="sv-image" src="https://placehold.co/200x130/3b0ddb/ffffff?text=Video+Editing" alt="Video Editing">
-                <h3>Video Editing</h3>
-                <p>Get Professional Video Editing Services</p>
-                <a href="./pages/services/video-editing-services.html" class="sv-card-link">Explore Details</a>
-            </div>
-        </div>
-        <div class="sv-carousel-card" id="card-5">
-            <div class="sv-card-content">
-                <img class="sv-image" src="https://placehold.co/200x130/3b0ddb/ffffff?text=Digital+Marketing" alt="Digital Marketing">
-                <h3>Digital Marketing (SEO and SMM)</h3>
-                <p>Create More Digital Reach via SEO and Social Media </p>
-                <a href="./pages/services/digital-marketing-solutions.html" class="sv-card-link">Explore Details</a>
-            </div>
-        </div>
-        <div class="sv-carousel-card" id="card-6">
-            <div class="sv-card-content">
-                <img class="sv-image" src="https://placehold.co/200x130/3b0ddb/ffffff?text=Business+Analytics" alt="Business Analysis">
-                <h3>Business Analytics & Strategy</h3>
-                <p>Get Business as per Best Insights through Data Analysis Dashboards</p>
-                <a href="./pages/services/business-analytics-and-strategies.html" class="sv-card-link">Explore Details</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Placeholder content to scroll past the carousel -->
-<div class="h-[100vh] bg-gray-100 flex items-center justify-center text-3xl text-gray-700 shadow-inner">
-    Content After Carousel
-</div>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const container = document.querySelector('.sv-scroll-carousel-container');
-        const cards = document.querySelectorAll('.sv-carousel-card');
+    <!-- STICKY CONTAINER: Controls the duration of the sticky effect -->
+    <div class="sticky-container">
         
-        // --- Get CSS variables (required for calculations) ---
-        const style = getComputedStyle(document.documentElement);
-        // Use a function to safely parse CSS variables
-        const getCssVar = (name) => parseFloat(style.getPropertyValue(name));
-
-        const cardScrollStep = getCssVar('--card-scroll-step');
-        const horizontalOffset = getCssVar('--horizontal-offset');
+        <!-- SECTION 2: The Element that Becomes the Background -->
+        <div class="section-2-background">
+            <h1 class="text-4xl font-extrabold tracking-wider">
+                SECTION 2 (3D Background)
+            </h1>
+        </div>
         
-        // 100vh buffer used at the top of the container (to prevent previous section overlap)
-        const topPaddingVh = window.innerHeight; 
-
-        // --- Observer for 'in-view' (Pop Out/In) ---
-        // Used only for initial visibility and scale (sv-in-view class)
-        const popOutObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('sv-in-view');
-                } else {
-                    entry.target.classList.remove('sv-in-view');
-                    entry.target.classList.remove('sv-active'); 
-                }
-            });
-        }, {
-            root: null, 
-            threshold: 0.05 
-        });
-
-        cards.forEach(card => popOutObserver.observe(card));
-
-
-        // --- Scroll Scrubbing Function (Continuous Smooth Motion) ---
-        function updateScrollScrub() {
-            // Get the current scroll position
-            const scrollY = window.scrollY;
+        <!-- SECTION 3: Content that Scrolls Over the Sticky Background -->
+        <div class="section-3-content">
+            <div class="content-card">
+                <h3 class="text-2xl font-bold mb-4">Content Card 1 (Start of Overlay)</h3>
+                <p>This content is scrolling over the sticky Section 2 background. The `padding-top: 100vh` on this container ensures we start seeing this content exactly when Section 2 locks into place at the top of the viewport.</p>
+                <p class="mt-4 text-sm opacity-60">The total scroll distance for this overlay is 100vh.</p>
+            </div>
             
-            // Calculate the scroll position relative to the start of the scrubbing area (below the 100vh padding)
-            // FIX: This calculation ensures that scrollY=0 at the top of the scrubbing zone
-            const effectiveScrollY = scrollY - (container.offsetTop - topPaddingVh); 
+            <div class="content-card">
+                <h3 class="text-2xl font-bold mb-4">Content Card 2 (Midpoint)</h3>
+                <p>We need enough vertical space here to ensure the transition is smooth. The vertical spacing of these cards combined with the natural browser margins contributes to the total scroll distance.</p>
+                <p class="mt-4">Keep scrolling...</p>
+            </div>
 
-            // Loop through each card to apply transformations based on its index
-            cards.forEach((card, index) => {
-                // The scroll position where this specific card should be centered
-                const centerScrollPos = index * cardScrollStep;
-                
-                // Current progress for this card: effectiveScrollY - idealCenterPosition
-                let progress = effectiveScrollY - centerScrollPos;
+            <div class="content-card">
+                <h3 class="text-2xl font-bold mb-4">Content Card 3 (End of Overlay)</h3>
+                <p>This final card covers the last part of the `sticky-container` scroll window. As soon as this card finishes scrolling, Section 4 will appear immediately.</p>
+            </div>
+        </div>
+    </div>
 
-                // --- Horizontal Oscillation (The Smooth Part) ---
-                
-                // Normalize progress to a value between -1 (fully left) and 1 (fully right)
-                // Centered around 0 (active state).
-                let normalizedProgress = progress / cardScrollStep;
-
-                // Clamp the value to ensure transformation doesn't exceed the defined offset
-                normalizedProgress = Math.min(1.5, Math.max(-1.5, normalizedProgress)); // Use a slightly higher clamp for softer edges
-
-                // Calculate the final translation (scrubbing from -150px to +150px)
-                const translateX = normalizedProgress * horizontalOffset;
-                
-                // --- Active State (Size Change & Z-Index) ---
-                
-                // Determine if the card is "close enough" to the center to be active (e.g., within 0.5 of a step)
-                const isCloseToCenter = Math.abs(normalizedProgress) < 0.5; 
-
-                if (isCloseToCenter) {
-                    card.classList.add('sv-active');
-                } else {
-                    card.classList.remove('sv-active');
-                }
-                
-                // Apply the combined transform (Scale is kept at 1 because it's handled by .sv-in-view)
-                if (card.classList.contains('sv-in-view')) {
-                    // Use a small scale adjustment based on closeness to center (optional but adds depth)
-                    const scaleAdjustment = 1 - (Math.abs(normalizedProgress) * 0.1); 
-                    card.style.transform = `translateX(${translateX}px) scale(${scaleAdjustment})`;
-                } else {
-                    // If not in view, maintain the initial small/invisible state 
-                    card.style.transform = 'scale(0.5)';
-                }
-            });
-        }
-
-        // Initialize the position on load
-        window.addEventListener('load', updateScrollScrub);
-
-        // Attach the scroll listener for continuous updates
-        window.addEventListener('scroll', updateScrollScrub);
-        window.addEventListener('resize', updateScrollScrub); 
-    });
-</script>
+    <!-- SECTION 4: Standard Content After the Sticky Effect -->
+    <section class="section-4">
+        <h2>Section 4: Next Section</h2>
+        <p class="text-xl opacity-80 mt-4">This section appears immediately after the sticky effect ends.</p>
+        <p class="absolute bottom-5 text-xl opacity-80">Scroll down for Section 5!</p>
+    </section>
+    
+    <!-- SECTION 5: New Section Added -->
+    <section class="section-5">
+        <h2>Section 5: Final Content</h2>
+        <p class="text-xl opacity-80 mt-4">This section immediately follows Section 4.</p>
+    </section>
 
 </body>
 </html>
