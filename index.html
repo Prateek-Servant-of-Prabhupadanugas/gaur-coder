@@ -514,6 +514,7 @@
 /* Remove transform: scale(0.5) translateX(...) from here. 
    We keep the default state small/invisible, but centered. */
 .sv-carousel-card {
+   
     --card-size-active: 280px; 
     width: var(--card-size);
     height: var(--card-size);
@@ -541,6 +542,14 @@
     text-align: center;
     overflow: hidden;
     will-change: transform, opacity; /* Optimization */
+     /* 1. Base Glassmorphism Properties */
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    backdrop-filter: blur(15px); /* Crucial for the blurred background effect */
+    -webkit-backdrop-filter: blur(15px); /* Safari support */
+
+        /* This gives a subtle, centralized color shift within the card */
+    background-image:  radial-gradient(circle at top left, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+ 
 }
 
 
@@ -557,14 +566,7 @@
 
 /* State when the card is the active/center card (Biggest Size) */
 .sv-carousel-card.sv-active {
-    /* 1. Base Glassmorphism Properties */
-    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-    backdrop-filter: blur(15px); /* Crucial for the blurred background effect */
-    -webkit-backdrop-filter: blur(15px); /* Safari support */
-
-        /* This gives a subtle, centralized color shift within the card */
-    background-image:  radial-gradient(circle at top left, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-
+    
     width: 100% ; 
     height: auto;
     z-index: 10;

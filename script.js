@@ -150,4 +150,7 @@
     });
     });
 
+    // Handling Scrolling and sticking of section 2 
+    const stickyElement = document.getElementById('cube-section');
+
     
