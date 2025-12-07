@@ -158,6 +158,9 @@
             box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
             border: 2px solid var(--gold);
             position: relative;
+            /* Added for better mobile responsiveness and to prevent button cut-off */
+            max-height: 90vh; 
+            overflow-y: auto; 
         }
 
         .close-btn {
@@ -204,7 +207,7 @@
             margin-top: 10px;
         }
         
-        #form-status {
+        #enroll-status { /* Using enroll-status for consistency with JS */
             margin-top: 15px;
             font-weight: 600;
             color: var(--gold);
@@ -222,6 +225,14 @@
 
     </style>
 </head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDMTM2HHTE"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YDMTM2HHTE');
+    </script>
 <body>
 
     <header>
@@ -285,92 +296,104 @@
         </div>
     </footer>
 
-    <!-- The Modal/Popup Form -->
     <div id="contactModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h3>Request Your Free Mobile App Consultation</h3>
             <p style="color:rgba(255, 255, 255, 0.8);">Describe your mobile app idea. We'll discuss requirements, platform strategy, and technical architecture.</p>
             
-            <form id="auditForm">
+            <form id="enroll-form">
                 <label for="name">Your Name*</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="Name" required>
 
                 <label for="phone">Phone Number*</label>
-                <input type="tel" id="phone" name="phone" required>
+                <input type="tel" id="phone" name="Phone" required>
 
-                <label for="business">Brief Description of Your Mobile App Idea</label>
-                <textarea id="business" name="business" rows="3" placeholder="e.g., 'A social networking app for pet owners that includes photo sharing and local event listings.'"></textarea>
+                <label for="details">Brief Description of Your Mobile App Idea</label>
+                <textarea id="details" name="Details" rows="3" placeholder="e.g., 'A social networking app for pet owners that includes photo sharing and local event listings.'"></textarea>
 
                 <button type="submit" class="cta-btn">Submit App Idea</button>
             </form>
-            <div id="form-status"></div>
+            <div id="enroll-status"></div>
         </div>
     </div>
 
     <script>
-        // JavaScript for Modal Control and Form Submission
+        // --- MODAL CONTROL FUNCTIONS ---
         document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('contactModal');
             const openBtns = document.querySelectorAll('#openModalBtn, #openModalBtn2');
             const closeBtn = document.querySelector('.close-btn');
-            const form = document.getElementById('auditForm');
-            const formStatus = document.getElementById('form-status');
-
+            
             // Function to open the modal
             const openModal = () => {
                 modal.style.display = 'flex';
+                // Clear status and reset form on opening
+                document.getElementById('enroll-status').textContent = ''; 
+                document.getElementById('enroll-form').reset();
             };
 
             // Function to close the modal
             const closeModal = () => {
                 modal.style.display = 'none';
+                document.getElementById('enroll-form').reset(); 
+                document.getElementById('enroll-status').textContent = ''; 
             };
 
-            // Event listeners to open the modal
+            // Event listeners for modal control
             openBtns.forEach(btn => {
                 btn.addEventListener('click', openModal);
             });
-
-            // Event listener to close the modal
             closeBtn.addEventListener('click', closeModal);
-
-            // Close modal when clicking outside of it
             window.addEventListener('click', (event) => {
                 if (event.target === modal) {
                     closeModal();
                 }
             });
+        });
 
-            // Handle form submission
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
+        // --- GOOGLE SHEETS SUBMISSION LOGIC ---
 
-                const formData = {
-                    name: document.getElementById('name').value,
-                    phone: document.getElementById('phone').value,
-                    business: document.getElementById('business').value
-                };
+        function closeEnrollPopup() {
+            document.getElementById('contactModal').style.display = 'none';
+            document.getElementById('enroll-status').textContent = '';
+            document.getElementById('enroll-form').reset();
+        }
 
-                // --- SIMULATED DATA HANDLING ---
-                // In a real application, this data would be sent to a backend service 
-                // to save to a database or spreadsheet (like the Excel connection mentioned).
-                
-                console.log('Mobile App Idea Captured:', formData);
-                
-                // Show submission progress
-                formStatus.textContent = 'App idea submitted! Preparing for consultation...';
+        // Your specific Google Sheet Web App URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxb0kkLbhGSibG9_gWaVF1Vffg8H7AialAYVLkQlAdvdPiie0G6VzNdZ1hQlViYHXWE/exec';
+        
+        document.getElementById('enroll-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const status = document.getElementById('enroll-status');
+            status.textContent = 'Submitting...';
+            
+            const formData = new FormData(this);
 
-                setTimeout(() => {
-                    // Success State
-                    formStatus.textContent = '✅ Success! We received your project details. We will contact you soon to schedule your consultation.';
-                    form.reset(); // Clear the form
-                    
-                    // Optional: Auto-close modal after a delay
-                    setTimeout(closeModal, 3000); 
-                }, 2000); 
+            // Add a static field for context in the Google Sheet, e.g., "Source"
+            formData.append('Source', 'Mobile App Development Landing Page'); 
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => {
+                 if (!res.ok) throw new Error('Network response was not ok');
+                 return res.text();
+            })
+            .then(txt => {
+                // Success
+                status.textContent = 'Thank you! Your project request is received.';
+                // Close modal and reset form after delay
+                setTimeout(closeEnrollPopup, 1800); 
+            })
+            .catch(err => {
+                // Error
+                console.error('Submission Error:', err);
+                status.textContent = 'Error. Please try again.';
             });
         });
+    
     </script>
 </body>
 </html>

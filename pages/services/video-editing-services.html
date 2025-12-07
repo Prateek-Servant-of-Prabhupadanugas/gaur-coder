@@ -222,6 +222,14 @@
 
     </style>
 </head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDMTM2HHTE"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YDMTM2HHTE');
+    </script>
 <body>
 
     <header>
@@ -371,6 +379,35 @@
                 }, 2000); 
             });
         });
+
+    function openEnrollPopup() {
+      document.getElementById('enroll-popup').style.display = 'flex';
+    }
+    function closeEnrollPopup() {
+      document.getElementById('enroll-popup').style.display = 'none';
+      document.getElementById('enroll-status').textContent = '';
+      document.getElementById('enroll-form').reset();
+    }
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxb0kkLbhGSibG9_gWaVF1Vffg8H7AialAYVLkQlAdvdPiie0G6VzNdZ1hQlViYHXWE/exec';
+    document.getElementById('enroll-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const status = document.getElementById('enroll-status');
+      status.textContent = 'Submitting...';
+      const formData = new FormData(this);
+      fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.text())
+      .then(txt => {
+        status.textContent = 'Thank you! Your enrollment is received.';
+        setTimeout(closeEnrollPopup, 1800);
+      })
+      .catch(err => {
+        status.textContent = 'Error. Please try again.';
+      });
+    });
+  
     </script>
 </body>
 </html>
